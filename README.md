@@ -77,7 +77,6 @@ Strona działa wyłącznie jako **agregator embedów**.
 
 **Maksymilian Śleziak**
 📧 maksymilian.sleziak@ageno.pl
-🌐 https://ageno.pl
 
 Projekt tworzony z pasji do gór
 
