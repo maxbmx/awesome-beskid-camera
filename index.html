@@ -18,7 +18,7 @@
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: rgba(0,0,0,0.6);
+      background: rgba(3,2,1,0.2);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
     }
@@ -30,17 +30,18 @@
     }
 
     nav a {
-      color: #fff;
+      color: #000;
       text-decoration: none;
       font-family: system-ui, Arial, sans-serif;
       font-size: 12px;
       padding: 6px 14px;
       border-radius: 20px;
-      background: rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.2);
+      transition: background .15s ease-in-out, opacity .15s ease-in-out;
     }
 
     nav a:hover {
-      background: rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.5);
     }
 
     nav {
@@ -50,12 +51,39 @@
       padding: 10px 16px;
     }
 
-    .logo {
-      font-size: 12px;
+    nav .logo {
+      font-size: 14px;
       font-weight: 600;
-      letter-spacing: 1px;
-      color: #fff;
+      letter-spacing: -0.5px;
+      color: #000;
       opacity: 0.9;
+      font-weight: bold;
+    }
+
+   .cloud-text {
+      background: linear-gradient(
+        90deg,
+        #000000 0%,
+        #0b1324 15%,
+        #1a2a4f 30%,
+        #3b4f7a 50%,
+        #1a2a4f 70%,
+        #0b1324 85%,
+        #000000 100%
+      );
+
+      background-size: 300% 100%;
+      background-position: 0% 50%;
+
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+
+      animation: clouds 8s linear infinite;
+    }
+
+    @keyframes clouds {
+      from { background-position:   0% 50%; }
+      to   { background-position: 300% 50%; }
     }
 
     .menu {
@@ -65,9 +93,10 @@
 
 
     h2 {
-      font-size: 18px;
+      font-size: 24px;
       color: #000;
       text-align: center;
+
     }
 
     .grid {
@@ -117,15 +146,27 @@
     }
 
     footer a {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+      display: block;
       text-decoration: none;
     }
 
     footer svg {
       height: 30px;
     }
+
+    .copy {
+      background: #333;
+      color: #888;
+      font-size: 11px;
+      text-align: left;
+      padding: 20px;
+
+      div {
+        max-width: 500px;
+      }
+    }
+
+
 
     @media (max-width: 768px) {
       .grid {
@@ -136,14 +177,47 @@
         height: 60vh;
       }
     }
+
+
   </style>
 </head>
 
 <body>
 
+
+<div class='rainbow'></div>
+<div class='rainbow'></div>
+<div class='rainbow'></div>
+<div class='rainbow'></div>
+<div class='rainbow'></div>
+<div class='rainbow'></div>
+<div class='rainbow'></div>
+<div class='rainbow'></div>
+<div class='rainbow'></div>
+<div class='rainbow'></div>
+<div class='rainbow'></div>
+<div class='rainbow'></div>
+<div class='rainbow'></div>
+<div class='rainbow'></div>
+<div class='rainbow'></div>
+<div class='rainbow'></div>
+<div class='rainbow'></div>
+<div class='rainbow'></div>
+<div class='rainbow'></div>
+<div class='rainbow'></div>
+<div class='rainbow'></div>
+<div class='rainbow'></div>
+<div class='rainbow'></div>
+<div class='rainbow'></div>
+<div class='rainbow'></div>
+<div class='h'></div>
+<div class='v'></div>
+
+
+
 <header>
   <nav>
-    <div class="logo">AWESOME&nbsp;BESKID&nbsp;CAMERA</div>
+    <div class="logo cloud-text">AWESOME&nbsp;BESKID&nbsp;CAMERA</div>
 
     <div class="menu">
       <a href="#bike">Bike</a>
@@ -184,11 +258,19 @@
     <div class="label">Pilsko – Miziowa</div>
   </div>
 
+  <div class="cam">
+    <iframe src="https://polineo.pl:5443/LiveApp/play.html?name=Q8aJqj0p7sUXGep15093231011287407"></iframe>
+    <div class="label">Klepki</div>
+  </div>
+
+
+
+
 </div>
 
 <footer>
   <a href="https://ageno.pl" target="_blank" rel="noopener">
-    <!-- LOGO AGENO SVG -->
+
     <svg width="141" height="56" viewBox="0 0 141 56" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M31.7245 37.367H26.4324L29.0784 32.6964L31.7245 28.0258L34.3705 32.6964L37.0165 37.367H31.7245ZM31.6809 46.6589H31.7222H52.888L42.3062 27.979L31.7245 9.29907L21.1427 27.979L10.5586 46.6589H21.1816L23.7864 42.0633L26.4324 37.3927L29.0784 42.0633L31.6809 46.6589Z" fill="#FF6B00"/>
       <path d="M122.644 34.3843C123.226 34.3843 123.755 34.2789 124.229 34.0659C124.706 33.8528 125.109 33.5625 125.443 33.195C125.778 32.8274 126.037 32.3943 126.22 31.898C126.406 31.4017 126.497 30.8632 126.497 30.2826C126.497 29.702 126.406 29.1635 126.22 28.6672C126.035 28.1709 125.776 27.7401 125.443 27.3702C125.109 27.0027 124.706 26.7124 124.229 26.4993C123.753 26.2863 123.226 26.1809 122.644 26.1809C122.062 26.1809 121.533 26.2863 121.059 26.4993C120.582 26.7124 120.174 27.0027 119.835 27.3702C119.494 27.7378 119.233 28.1709 119.047 28.6672C118.862 29.1635 118.77 29.702 118.77 30.2826C118.77 30.8632 118.862 31.4017 119.047 31.898C119.233 32.3943 119.494 32.8251 119.835 33.195C120.177 33.5625 120.584 33.8528 121.059 34.0659C121.533 34.2789 122.062 34.3843 122.644 34.3843ZM122.644 37.615C121.551 37.615 120.543 37.4348 119.62 37.0742C118.697 36.7137 117.895 36.2103 117.214 35.5665C116.534 34.9227 116 34.1501 115.618 33.2512C115.235 32.3522 115.043 31.3642 115.043 30.2873C115.043 29.2103 115.235 28.2224 115.618 27.3234C116 26.4244 116.534 25.6518 117.214 25.008C117.895 24.3642 118.699 23.8609 119.62 23.5003C120.543 23.1398 121.551 22.9595 122.644 22.9595C123.723 22.9595 124.726 23.1398 125.657 23.5003C126.587 23.8609 127.388 24.3642 128.062 25.008C128.736 25.6518 129.265 26.4244 129.647 27.3234C130.03 28.2224 130.222 29.2103 130.222 30.2873C130.222 31.3642 130.03 32.3522 129.647 33.2512C129.265 34.1501 128.736 34.9227 128.062 35.5665C127.388 36.2103 126.587 36.7137 125.657 37.0742C124.726 37.4348 123.723 37.615 122.644 37.615ZM110.321 37.3598L104.317 29.1588V37.3598H100.653V23.1889H104.422L110.172 30.9873V23.1889H113.856V37.3598H110.321ZM88.5573 37.3598V23.1889H98.9696V26.3752H92.2205V28.5853H98.8207V31.7716H92.2205V34.1736H98.9696V37.3598H88.5573ZM80.0809 37.615C79.1004 37.615 78.168 37.4441 77.2814 37.1047C76.3948 36.7652 75.6136 36.2759 74.9401 35.6391C74.2666 35.0023 73.7305 34.2344 73.3319 33.3331C72.9356 32.4341 72.7362 31.418 72.7362 30.2849C72.7362 29.1659 72.9378 28.1522 73.3433 27.2461C73.7488 26.3401 74.2987 25.5675 74.9928 24.9308C75.6892 24.294 76.5002 23.8047 77.4303 23.4652C78.3604 23.1257 79.357 22.9548 80.4223 22.9548C81.2172 22.9548 81.9343 23.0508 82.5735 23.2428C83.2126 23.4348 83.7808 23.69 84.2779 24.0083C84.775 24.3267 85.208 24.6943 85.5769 25.1134C85.9457 25.5301 86.2504 25.9609 86.4932 26.3986L83.428 27.993C83.1576 27.5247 82.7636 27.108 82.2459 26.7405C81.7281 26.3729 81.121 26.1879 80.4246 26.1879C79.8427 26.1879 79.3112 26.291 78.8278 26.497C78.3444 26.703 77.9275 26.9886 77.5724 27.3585C77.2173 27.7261 76.9447 28.1615 76.7522 28.6649C76.5598 29.1682 76.4659 29.709 76.4659 30.2896C76.4659 30.8702 76.5621 31.4087 76.7522 31.905C76.9447 32.4013 77.2173 32.8321 77.5724 33.202C77.9275 33.5695 78.3467 33.8598 78.8278 34.0729C79.3112 34.2859 79.8427 34.3913 80.4246 34.3913C81.2195 34.3913 81.8839 34.197 82.4154 33.806C82.9469 33.4174 83.334 32.9515 83.5769 32.4154H79.8496V29.208H87.5997C87.5997 30.5542 87.4256 31.7481 87.0774 32.7876C86.7292 33.8294 86.2298 34.7073 85.5769 35.4214C84.9239 36.1378 84.1336 36.6809 83.2035 37.0578C82.2711 37.4277 81.231 37.615 80.0809 37.615ZM65.8978 26.799L64.088 32.1321H67.6871L65.8978 26.799ZM69.3892 37.3598L68.6859 35.3207H63.0869L62.3836 37.3598H58.2324L63.5771 23.1889H68.1979L73.5426 37.3598H69.3892Z" fill="#231430"/>
@@ -197,5 +279,37 @@
   </a>
 </footer>
 
+<div class="copy">
+  <div>
+    <p>Wszelkie materiały audiowizualne prezentowane na niniejszej stronie internetowej, w szczególności obrazy pochodzące z kamer internetowych (streaming wideo, podgląd na żywo), stanowią własność podmiotów trzecich będących właścicielami, administratorami lub operatorami tych kamer.</p>
+    <p>Prawa autorskie oraz wszelkie prawa pokrewne do materiałów audiowizualnych przysługują wyłącznie właścicielom kamer lub podmiotom uprawnionym na podstawie odrębnych umów, licencji lub przepisów prawa. Administrator niniejszej strony internetowej nie jest właścicielem prezentowanych transmisji, nie ingeruje w ich treść, sposób działania ani dostępność oraz nie rości sobie żadnych praw do tych materiałów.</p>
+    <p>Strona internetowa pełni wyłącznie funkcję agregatora i prezentuje osadzone treści (embed) udostępnione publicznie przez właścicieli kamer za pośrednictwem ich oficjalnych serwisów lub platform. Osadzanie transmisji odbywa się w sposób techniczny, bez modyfikacji strumienia wideo, bez jego kopiowania, zapisywania, retransmisji ani dalszego rozpowszechniania poza mechanizmem osadzenia.</p>
+    <p>Administrator strony nie czerpie żadnych bezpośrednich ani pośrednich korzyści finansowych z tytułu prezentowania transmisji z kamer, w szczególności nie pobiera opłat za dostęp do obrazu, nie sprzedaje subskrypcji, nie emituje reklam w ramach samych transmisji oraz nie wykorzystuje materiałów w celach komercyjnych, marketingowych ani reklamowych.</p>
+    <p>Administrator strony nie ponosi odpowiedzialności za:</p>
+    <ul>
+      <li>treść prezentowanych transmisji,</li>
+      <li>ich jakość, aktualność lub ciągłość działania,</li>
+      <li>ewentualne przerwy techniczne, opóźnienia lub brak dostępności obrazu,</li>
+      <li>zgodność działania kamer z obowiązującymi przepisami prawa, w tym przepisami dotyczącymi ochrony danych osobowych, wizerunku lub prywatności.</li>
+    </ul>
+    <p>Wszelkie roszczenia, zastrzeżenia lub żądania dotyczące praw autorskich, sposobu działania kamer, treści transmisji lub ich legalności powinny być kierowane bezpośrednio do właścicieli lub operatorów poszczególnych kamer.</p>
+    <p>W przypadku zgłoszenia przez uprawniony podmiot zastrzeżeń dotyczących prezentowania danej transmisji, administrator strony zastrzega sobie prawo do niezwłocznego usunięcia lub zablokowania dostępu do wskazanego materiału, bez konieczności podawania przyczyny.</p>
+    <p>Korzystanie z niniejszej strony oznacza akceptację powyższych zasad oraz świadomość, że prezentowane materiały audiowizualne pochodzą od podmiotów trzecich i pozostają poza kontrolą administratora strony.</p>
+  </div>
+</div>
+
 </body>
+
+  <script>
+  window.addEventListener('scroll', () => {
+    const max = 120;
+    const t = Math.min(window.scrollY, max) / max; // 0..1
+    const v = Math.round(255 * t); // #000 -> #fff (jak chcesz odwrotnie, zmień na 255*(1-t))
+    const color = `rgb(${v},${v},${v})`;
+
+    document.querySelectorAll('header, header a, header .logo')
+      .forEach(el => el.style.color = color);
+  }, { passive: true });
+</script>
+
 </html>
