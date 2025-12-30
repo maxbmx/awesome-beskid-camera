@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Awesome Beskid Camera – Wszystkie beskidzkie kamery w jednym miejscu</title>
   <meta name="description" content="Kamery na żywo z Beskidu Śląskiego i Żywieckiego. Bike i Snow w jednym miejscu.">
-
+  <meta name="referrer" content="no-referrer">
   <link rel="icon" type="image/svg+xml" href="awesome-beskid-camera.svg" />
   <link rel="manifest" href="manifest.json">
   <meta property="og:type" content="website">
@@ -14,7 +14,6 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image" content="https://maxbmx.github.io/awesome-beskid-camera/awesome-beskid-camera.png">
-
   <meta property="og:url" content="https://maxbmx.github.io/awesome-beskid-camera/">
   <meta property="og:site_name" content="Awesome Beskid Camera">
 
@@ -22,7 +21,6 @@
   <meta name="twitter:title" content="Awesome Beskid Camera">
   <meta name="twitter:description" content="Kamery na żywo z Beskidu Śląskiego i Żywieckiego. Bike, Snow, warunki w górach w jednym miejscu.">
   <meta name="twitter:image" content="https://maxbmx.github.io/awesome-beskid-camera/awesome-beskid-camera.png">
-
 
   <style>
     :root{
@@ -263,7 +261,7 @@
       aspect-ratio: 16 / 9;
       height: auto;
       min-height: 0;
-      background:#0b0b0b;
+      background:#fff;
     }
 
     .frame iframe{
@@ -356,7 +354,6 @@
     @media (max-width: 768px){
       .hero h1{ font-size: 30px; }
       .grid{ grid-template-columns: 1fr; }
-      .frame{ height: 55vh; min-height: 350px; }
       .nav{ display:none; }
     }
   </style>
@@ -541,7 +538,6 @@
 </footer>
 
 <script>
-  // Filtr: tekst + kategoria
   const q = document.getElementById('q');
   const items = [...document.querySelectorAll('.cam-item')];
   const chips = [...document.querySelectorAll('.chip')];
@@ -573,12 +569,7 @@
     });
   });
 
-
-if ('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js');
-
-
-
-
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js');
 </script>
 
 </body>
