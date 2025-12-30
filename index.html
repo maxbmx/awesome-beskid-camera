@@ -7,7 +7,7 @@
   <meta name="description" content="Kamery na żywo z Beskidu Śląskiego i Żywieckiego. Bike i Snow w jednym miejscu.">
 
   <link rel="icon" type="image/svg+xml" href="awesome-beskid-camera.svg" />
-
+  <link rel="manifest" href="manifest.json">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Awesome Beskid Camera">
   <meta property="og:description" content="Kamery na żywo z Beskidu Śląskiego i Żywieckiego. Bike, Snow, warunki w górach w jednym miejscu.">
@@ -549,6 +549,10 @@
       applyFilters();
     });
   });
+
+
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('/service-worker.js');
+
 </script>
 
 </body>
