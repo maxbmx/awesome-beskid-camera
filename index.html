@@ -13,14 +13,16 @@
   <meta property="og:description" content="Kamery na żywo z Beskidu Śląskiego i Żywieckiego. Bike, Snow, warunki w górach w jednym miejscu.">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta name="twitter:image" content="https://maxbmx.github.io/awesome-beskid-camera/awesome-beskid-camera.png">
+  <meta property="og:image" content="https://maxbmx.github.io/awesome-beskid-camera/awesome-beskid-camera.png">
+
   <meta property="og:url" content="https://maxbmx.github.io/awesome-beskid-camera/">
   <meta property="og:site_name" content="Awesome Beskid Camera">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Awesome Beskid Camera">
   <meta name="twitter:description" content="Kamery na żywo z Beskidu Śląskiego i Żywieckiego. Bike, Snow, warunki w górach w jednym miejscu.">
-  <meta name="twitter:image" content="awesome-beskid-camera.png">
+  <meta name="twitter:image" content="https://maxbmx.github.io/awesome-beskid-camera/awesome-beskid-camera.png">
+
 
   <style>
     :root{
@@ -258,16 +260,17 @@
 
     .frame{
       position: relative;
-      min-height: 350px;
-      height: 44vh;
-      background: #0b0b0b;
+      aspect-ratio: 16 / 9;
+      height: auto;
+      min-height: 0;
+      background:#0b0b0b;
     }
 
     .frame iframe{
+      position:absolute;
+      inset:0;
       width:100%;
       height:100%;
-      border:0;
-      display:block;
     }
 
     .overlay{
@@ -404,7 +407,7 @@
   <div class="grid">
     <article class="card cam-item" data-cat="bike" data-name="Szyndzielnia – Schronisko">
       <div class="frame">
-        <iframe src="https://player.webcamera.pl/enet24_cam_a07089" loading="lazy"></iframe>
+        <iframe referrerpolicy="no-referrer" src="https://player.webcamera.pl/enet24_cam_a07089" loading="lazy"></iframe>
         <div class="overlay">
           <div class="label">Szyndzielnia – Schronisko</div>
           <div class="tag">Bike</div>
@@ -414,7 +417,7 @@
 
     <article class="card cam-item" data-cat="bike" data-name="Szyndzielnia – Polana">
       <div class="frame">
-        <iframe src="https://embed.widoki.tv/?camera=szyndzielnia" loading="lazy"></iframe>
+        <iframe referrerpolicy="no-referrer" src="https://embed.widoki.tv/?camera=szyndzielnia" loading="lazy"></iframe>
         <div class="overlay">
           <div class="label">Szyndzielnia – Polana</div>
           <div class="tag">Bike</div>
@@ -424,7 +427,7 @@
 
     <article class="card cam-item" data-cat="bike" data-name="Magurka Wilkowicka">
       <div class="frame">
-        <iframe src="https://streaming.ovh/Magurka/embed.html" loading="lazy"></iframe>
+        <iframe referrerpolicy="no-referrer" src="https://streaming.ovh/Magurka/embed.html" loading="lazy"></iframe>
         <div class="overlay">
           <div class="label">Magurka Wilkowicka</div>
           <div class="tag">Bike</div>
@@ -441,7 +444,7 @@
   <div class="grid">
     <article class="card cam-item" data-cat="snow" data-name="Skrzyczne – FIS">
       <div class="frame">
-        <iframe src="https://player.webcamera.pl/cos_cam_0e193b" loading="lazy"></iframe>
+        <iframe referrerpolicy="no-referrer" src="https://player.webcamera.pl/cos_cam_0e193b" loading="lazy"></iframe>
         <div class="overlay">
           <div class="label">Skrzyczne – FIS</div>
           <div class="tag">Snow</div>
@@ -451,7 +454,7 @@
 
     <article class="card cam-item" data-cat="snow" data-name="Małe Skrzyczne – Hala Skrzeczeńska">
       <div class="frame">
-        <iframe src="https://player.webcamera.pl/tmr_cam_c488d9" loading="lazy"></iframe>
+        <iframe referrerpolicy="no-referrer" src="https://player.webcamera.pl/tmr_cam_c488d9" loading="lazy"></iframe>
         <div class="overlay">
           <div class="label">Małe Skrzyczne – Hala Skrzeczeńska</div>
           <div class="tag">Snow</div>
@@ -461,7 +464,7 @@
 
     <article class="card cam-item" data-cat="snow" data-name="Solisko">
       <div class="frame">
-        <iframe src="https://player.webcamera.pl/tmr_cam_21195a" loading="lazy"></iframe>
+        <iframe referrerpolicy="no-referrer" src="https://player.webcamera.pl/tmr_cam_21195a" loading="lazy"></iframe>
         <div class="overlay">
           <div class="label">Solisko</div>
           <div class="tag">Snow</div>
@@ -471,7 +474,7 @@
 
     <article class="card cam-item" data-cat="snow" data-name="Pilsko – Miziowa">
       <div class="frame">
-        <iframe src="https://video.itcom.pl/korbielow1/embed.html" loading="lazy"></iframe>
+        <iframe referrerpolicy="no-referrer" src="https://video.itcom.pl/korbielow1/embed.html" loading="lazy"></iframe>
         <div class="overlay">
           <div class="label">Pilsko – Miziowa</div>
           <div class="tag">Snow</div>
@@ -481,7 +484,7 @@
 
     <article class="card cam-item" data-cat="snow" data-name="Klepki">
       <div class="frame">
-        <iframe src="https://polineo.pl:5443/LiveApp/play.html?name=Q8aJqj0p7sUXGep15093231011287407" loading="lazy"></iframe>
+        <iframe referrerpolicy="no-referrer" src="https://polineo.pl:5443/LiveApp/play.html?name=Q8aJqj0p7sUXGep15093231011287407" loading="lazy"></iframe>
         <div class="overlay">
           <div class="label">Klepki</div>
           <div class="tag">Snow</div>
@@ -491,7 +494,7 @@
 
     <article class="card cam-item" data-cat="snow" data-name="Biały Krzyż">
       <div class="frame">
-        <iframe src="https://imageserver.webcamera.pl/rec/bialy-krzyz/latest.mp4" loading="lazy"></iframe>
+        <iframe referrerpolicy="no-referrer" src="https://player.webcamera.pl/bialykrzyz_cam_b23041" loading="lazy"></iframe>
         <div class="overlay">
           <div class="label">Biały Krzyż</div>
           <div class="tag">Snow</div>
@@ -501,7 +504,7 @@
 
     <article class="card cam-item" data-cat="snow" data-name="Zwardoń Ski">
       <div class="frame">
-        <iframe src="https://imageserver.webcamera.pl/rec/zwardon-ski/latest.mp4" loading="lazy"></iframe>
+        <iframe referrerpolicy="no-referrer" src="https://player.webcamera.pl/zwardon_cam_9eb18f" loading="lazy"></iframe>
         <div class="overlay">
           <div class="label">Zwardoń Ski</div>
           <div class="tag">Snow</div>
@@ -511,7 +514,7 @@
 
     <article class="card cam-item" data-cat="snow" data-name="Rzyki – Czarny Groń">
       <div class="frame">
-        <iframe src="https://player.webcamera.pl/czarnygron_cam_c0df65" loading="lazy"></iframe>
+        <iframe referrerpolicy="no-referrer" src="https://player.webcamera.pl/czarnygron_cam_c0df65" loading="lazy"></iframe>
         <div class="overlay">
           <div class="label">Rzyki – Czarny Groń</div>
           <div class="tag">Snow</div>
@@ -571,7 +574,10 @@
   });
 
 
-if ('serviceWorker' in navigator) navigator.serviceWorker.register('/service-worker.js');
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js');
+
+
+
 
 </script>
 
