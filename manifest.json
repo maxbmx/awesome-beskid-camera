@@ -1,6 +1,6 @@
 {
   "name": "Awesome Beskid Camera",
-  "short_name": "BeskidCam",
+  "short_name": "AwBeCam",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#0f1218",
