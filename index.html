@@ -31,7 +31,7 @@
       --border:rgba(17,17,17,.08);
       --shadow:0 10px 30px rgba(0,0,0,.08);
       --radius:16px;
-      --max:1200px;
+      --max:1480px;
     }
 
     * { box-sizing: border-box; }
@@ -177,6 +177,7 @@
       border-radius: 999px;
       padding: 10px 14px;
       box-shadow: 0 10px 30px rgba(0,0,0,.1);
+      scroll-margin-top: 60px;
     }
 
     .searchbar svg{ flex: 0 0 auto; opacity: .6; }
@@ -378,7 +379,7 @@
 
 <section class="hero">
   <h1>Beskidy na żywo.</h1>
-  <p>Podgląd kamer z Beskidów w jednym miejscu stworzony na użytek prywatny autora.</p>
+  <p>Podgląd kamer z Beskidów w jednym miejscu stworzony na użytek osobisty autora.</p>
 
   <div class="searchbar">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -597,6 +598,13 @@
       activeFilter = ch.dataset.filter;
       applyFilters();
     });
+  });
+
+  const search = document.getElementById('q');
+  const searchbar = document.querySelector('.searchbar');
+
+  search.addEventListener('focus', () => {
+    searchbar.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js');
