@@ -556,6 +556,19 @@
         </div>
       </div>
     </article>
+
+    <article class="card cam-item" data-cat="snow" data-name="Czantoria">
+      <div class="frame">
+        <iframe referrerpolicy="no-referrer" src="https://stream.interbeskidy.net/live/stream/czantoria003.stream/chunklist_w1102021268.m3u8" loading="lazy"></iframe>
+        <div class="overlay">
+          <div class="label">Czantoria</div>
+          <div class="tag">Snow</div>
+        </div>
+      </div>
+    </article>
+
+
+
   </div>
 
   <div class="section-title" id="weather" style="margin-top:26px;">
@@ -629,6 +642,9 @@
   search.addEventListener('focus', () => {
     searchbar.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
+
+
+
 
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js');
 </script>
