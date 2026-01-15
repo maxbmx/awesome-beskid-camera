@@ -349,6 +349,72 @@
         pointer-events: none;
       }
 
+      .overlay-right {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        pointer-events: none;
+      }
+
+      .fav-btn {
+        pointer-events: auto;
+        width: 34px;
+        height: 34px;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, .18);
+        background: rgba(0, 0, 0, .25);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        cursor: pointer;
+        color: #fff;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, .25);
+        transition: transform .12s ease, background-color .2s ease, border-color .2s ease;
+      }
+
+      .fav-btn:hover {
+        transform: translateY(-1px);
+        background: rgba(0, 0, 0, .35);
+        border-color: rgba(255, 255, 255, .28);
+      }
+
+      .fav-btn:active {
+        transform: translateY(0px) scale(.98);
+      }
+
+      .fav-btn:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(255, 255, 255, .18), 0 8px 18px rgba(0, 0, 0, .25);
+      }
+
+      .fav-btn svg {
+        display: block;
+        width: 18px;
+        height: 18px;
+        fill: transparent;
+        stroke: currentColor;
+        stroke-width: 2;
+        opacity: .95;
+      }
+
+      .fav-btn[aria-pressed="true"] svg {
+        fill: #fbbf24; /* amber-400 */
+        stroke: #fbbf24;
+      }
+
+      .empty-state {
+        display: none;
+        margin-top: 14px;
+        padding: 14px 16px;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        background: var(--card);
+        color: var(--muted);
+        box-shadow: var(--shadow);
+        font-size: 13px;
+      }
+
       .label {
         pointer-events: none;
         color: #fff;
@@ -456,11 +522,15 @@
         </svg><input id="q" type="search" placeholder="Szukaj: Skrzyczne, Szyndzielnia, Miziowa..." autocomplete="off" /></div>
       <div class="chips" role="tablist" aria-label="Filtry">
         <div class="chip active" data-filter="all">Wszystkie</div>
+        <div class="chip" data-filter="fav">Ulubione</div>
         <div class="chip" data-filter="bike">Bike</div>
         <div class="chip" data-filter="snow">Snow</div>
       </div>
     </section>
     <main class="container">
+      <div id="empty" class="empty-state" role="status" aria-live="polite">
+        Brak ulubionych. Kliknij gwiazdkę na kamerze, aby dodać ją do ulubionych.
+      </div>
       <div class="section-title" id="bike">
         <h2>Bike</h2><span>Kamery pod jazdę enduro MTB</span>
       </div>
@@ -469,7 +539,14 @@
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://player.webcamera.pl/enet24_cam_a07089" loading="lazy"></iframe>
             <div class="overlay">
               <div class="label">Szyndzielnia – Schronisko</div>
-              <div class="tag">Bike</div>
+              <div class="overlay-right">
+                <button class="fav-btn" type="button" aria-label="Dodaj do ulubionych" aria-pressed="false">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M12 17.3l-6.18 3.64 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.67 1.64 7.03L12 17.3Z"></path>
+                  </svg>
+                </button>
+                <div class="tag">Bike</div>
+              </div>
             </div>
           </div>
         </article>
@@ -477,7 +554,14 @@
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://embed.widoki.tv/?camera=szyndzielnia" loading="lazy"></iframe>
             <div class="overlay">
               <div class="label">Szyndzielnia – Polana</div>
-              <div class="tag">Bike</div>
+              <div class="overlay-right">
+                <button class="fav-btn" type="button" aria-label="Dodaj do ulubionych" aria-pressed="false">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M12 17.3l-6.18 3.64 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.67 1.64 7.03L12 17.3Z"></path>
+                  </svg>
+                </button>
+                <div class="tag">Bike</div>
+              </div>
             </div>
           </div>
         </article>
@@ -485,7 +569,14 @@
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://streaming.ovh/Magurka/embed.html" loading="lazy"></iframe>
             <div class="overlay">
               <div class="label">Magurka Wilkowicka</div>
-              <div class="tag">Bike</div>
+              <div class="overlay-right">
+                <button class="fav-btn" type="button" aria-label="Dodaj do ulubionych" aria-pressed="false">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M12 17.3l-6.18 3.64 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.67 1.64 7.03L12 17.3Z"></path>
+                  </svg>
+                </button>
+                <div class="tag">Bike</div>
+              </div>
             </div>
           </div>
         </article>
@@ -498,7 +589,14 @@
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://stream.bbosir.bielsko.pl:8888/stok_gorna/" loading="lazy"></iframe>
             <div class="overlay">
               <div class="label">Dębowiec – górna stacja</div>
-              <div class="tag">Snow</div>
+              <div class="overlay-right">
+                <button class="fav-btn" type="button" aria-label="Dodaj do ulubionych" aria-pressed="false">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M12 17.3l-6.18 3.64 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.67 1.64 7.03L12 17.3Z"></path>
+                  </svg>
+                </button>
+                <div class="tag">Snow</div>
+              </div>
             </div>
           </div>
         </article>
@@ -506,7 +604,14 @@
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://stream.bbosir.bielsko.pl:8888/stok_dolna/" loading="lazy"></iframe>
             <div class="overlay">
               <div class="label">Dębowiec – dolna stacja</div>
-              <div class="tag">Snow</div>
+              <div class="overlay-right">
+                <button class="fav-btn" type="button" aria-label="Dodaj do ulubionych" aria-pressed="false">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M12 17.3l-6.18 3.64 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.67 1.64 7.03L12 17.3Z"></path>
+                  </svg>
+                </button>
+                <div class="tag">Snow</div>
+              </div>
             </div>
           </div>
         </article>
@@ -514,7 +619,14 @@
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://player.webcamera.pl/cos_cam_0e193b" loading="lazy"></iframe>
             <div class="overlay">
               <div class="label">Skrzyczne – FIS</div>
-              <div class="tag">Snow</div>
+              <div class="overlay-right">
+                <button class="fav-btn" type="button" aria-label="Dodaj do ulubionych" aria-pressed="false">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M12 17.3l-6.18 3.64 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.67 1.64 7.03L12 17.3Z"></path>
+                  </svg>
+                </button>
+                <div class="tag">Snow</div>
+              </div>
             </div>
           </div>
         </article>
@@ -522,7 +634,14 @@
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://player.webcamera.pl/tmr_cam_c488d9" loading="lazy"></iframe>
             <div class="overlay">
               <div class="label">Małe Skrzyczne – Hala Skrzeczeńska</div>
-              <div class="tag">Snow</div>
+              <div class="overlay-right">
+                <button class="fav-btn" type="button" aria-label="Dodaj do ulubionych" aria-pressed="false">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M12 17.3l-6.18 3.64 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.67 1.64 7.03L12 17.3Z"></path>
+                  </svg>
+                </button>
+                <div class="tag">Snow</div>
+              </div>
             </div>
           </div>
         </article>
@@ -530,7 +649,14 @@
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://player.webcamera.pl/tmr_cam_21195a" loading="lazy"></iframe>
             <div class="overlay">
               <div class="label">Solisko</div>
-              <div class="tag">Snow</div>
+              <div class="overlay-right">
+                <button class="fav-btn" type="button" aria-label="Dodaj do ulubionych" aria-pressed="false">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M12 17.3l-6.18 3.64 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.67 1.64 7.03L12 17.3Z"></path>
+                  </svg>
+                </button>
+                <div class="tag">Snow</div>
+              </div>
             </div>
           </div>
         </article>
@@ -538,7 +664,14 @@
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://video.itcom.pl/korbielow1/embed.html" loading="lazy"></iframe>
             <div class="overlay">
               <div class="label">Pilsko – Miziowa</div>
-              <div class="tag">Snow</div>
+              <div class="overlay-right">
+                <button class="fav-btn" type="button" aria-label="Dodaj do ulubionych" aria-pressed="false">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M12 17.3l-6.18 3.64 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.67 1.64 7.03L12 17.3Z"></path>
+                  </svg>
+                </button>
+                <div class="tag">Snow</div>
+              </div>
             </div>
           </div>
         </article>
@@ -546,7 +679,14 @@
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://polineo.pl:5443/LiveApp/play.html?name=Q8aJqj0p7sUXGep15093231011287407" loading="lazy"></iframe>
             <div class="overlay">
               <div class="label">Klepki</div>
-              <div class="tag">Snow</div>
+              <div class="overlay-right">
+                <button class="fav-btn" type="button" aria-label="Dodaj do ulubionych" aria-pressed="false">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M12 17.3l-6.18 3.64 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.67 1.64 7.03L12 17.3Z"></path>
+                  </svg>
+                </button>
+                <div class="tag">Snow</div>
+              </div>
             </div>
           </div>
         </article>
@@ -554,7 +694,14 @@
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://player.webcamera.pl/bialykrzyz_cam_b23041" loading="lazy"></iframe>
             <div class="overlay">
               <div class="label">Biały Krzyż</div>
-              <div class="tag">Snow</div>
+              <div class="overlay-right">
+                <button class="fav-btn" type="button" aria-label="Dodaj do ulubionych" aria-pressed="false">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M12 17.3l-6.18 3.64 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.67 1.64 7.03L12 17.3Z"></path>
+                  </svg>
+                </button>
+                <div class="tag">Snow</div>
+              </div>
             </div>
           </div>
         </article>
@@ -562,7 +709,14 @@
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://player.webcamera.pl/zwardon_cam_9eb18f" loading="lazy"></iframe>
             <div class="overlay">
               <div class="label">Zwardoń Ski</div>
-              <div class="tag">Snow</div>
+              <div class="overlay-right">
+                <button class="fav-btn" type="button" aria-label="Dodaj do ulubionych" aria-pressed="false">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M12 17.3l-6.18 3.64 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.67 1.64 7.03L12 17.3Z"></path>
+                  </svg>
+                </button>
+                <div class="tag">Snow</div>
+              </div>
             </div>
           </div>
         </article>
@@ -570,7 +724,14 @@
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://player.webcamera.pl/czarnygron_cam_c0df65" loading="lazy"></iframe>
             <div class="overlay">
               <div class="label">Rzyki – Czarny Groń</div>
-              <div class="tag">Snow</div>
+              <div class="overlay-right">
+                <button class="fav-btn" type="button" aria-label="Dodaj do ulubionych" aria-pressed="false">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M12 17.3l-6.18 3.64 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.67 1.64 7.03L12 17.3Z"></path>
+                  </svg>
+                </button>
+                <div class="tag">Snow</div>
+              </div>
             </div>
           </div>
         </article>
@@ -578,7 +739,14 @@
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://player.webcamera.pl/czantoria_cam_2321a8" loading="lazy"></iframe>
             <div class="overlay">
               <div class="label">Czantoria</div>
-              <div class="tag">Snow</div>
+              <div class="overlay-right">
+                <button class="fav-btn" type="button" aria-label="Dodaj do ulubionych" aria-pressed="false">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M12 17.3l-6.18 3.64 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.67 1.64 7.03L12 17.3Z"></path>
+                  </svg>
+                </button>
+                <div class="tag">Snow</div>
+              </div>
             </div>
           </div>
         </article>
@@ -586,7 +754,14 @@
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://hoktastream3.webcamera.pl/lisiapolana_cam_bbd518/lisiapolana_cam_bbd518.stream/playlist.m3u8" loading="lazy"></iframe>
             <div class="overlay">
               <div class="label">Lisia Polana</div>
-              <div class="tag">Snow</div>
+              <div class="overlay-right">
+                <button class="fav-btn" type="button" aria-label="Dodaj do ulubionych" aria-pressed="false">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M12 17.3l-6.18 3.64 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.67 1.64 7.03L12 17.3Z"></path>
+                  </svg>
+                </button>
+                <div class="tag">Snow</div>
+              </div>
             </div>
           </div>
         </article>
@@ -599,7 +774,14 @@
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=default&metricTemp=default&metricWind=default&zoom=8&overlay=radar&product=ecmwf&level=surface&lat=49.873&lon=19.164" loading="lazy"></iframe>
             <div class="overlay">
               <div class="label">Windy</div>
-              <div class="tag"></div>
+              <div class="overlay-right">
+                <button class="fav-btn" type="button" aria-label="Dodaj do ulubionych" aria-pressed="false">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M12 17.3l-6.18 3.64 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.67 1.64 7.03L12 17.3Z"></path>
+                  </svg>
+                </button>
+                <div class="tag"></div>
+              </div>
             </div>
           </div>
         </article>
@@ -620,7 +802,70 @@
       const items = [...document.querySelectorAll('.cam-item')];
       const chips = [...document.querySelectorAll('.chip')];
       const lazyFrames = [...document.querySelectorAll('iframe.lazy-iframe')];
+      const emptyState = document.getElementById('empty');
       let activeFilter = 'all';
+
+      const FAV_STORAGE_KEY = 'abc:favorites:v1';
+      const loadFavs = () => {
+        try {
+          const raw = localStorage.getItem(FAV_STORAGE_KEY);
+          const arr = raw ? JSON.parse(raw) : [];
+          return new Set(Array.isArray(arr) ? arr : []);
+        } catch (_) {
+          return new Set();
+        }
+      };
+      const saveFavs = (set) => {
+        try {
+          localStorage.setItem(FAV_STORAGE_KEY, JSON.stringify([...set]));
+        } catch (_) {}
+      };
+
+      const slug = (s) => (s || '')
+        .toLowerCase()
+        .trim()
+        .replace(/[\u2013\u2014]/g, '-')   // – —
+        .replace(/[^a-z0-9ąćęłńóśżź -]/gi, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '');
+
+      const getItemId = (el) => {
+        const name = el.dataset.name || '';
+        const cat = el.dataset.cat || '';
+        const src = el.querySelector('iframe')?.dataset?.src || el.querySelector('iframe')?.getAttribute('src') || '';
+        const srcKey = src ? src.replace(/^https?:\/\//, '').slice(0, 80) : '';
+        return `${slug(cat)}:${slug(name)}:${slug(srcKey)}`;
+      };
+
+      let favorites = loadFavs();
+      items.forEach(el => {
+        el.dataset.id = getItemId(el);
+      });
+
+      const syncFavButtons = () => {
+        items.forEach(el => {
+          const id = el.dataset.id;
+          const btn = el.querySelector('.fav-btn');
+          if (!btn || !id) return;
+          const isFav = favorites.has(id);
+          btn.setAttribute('aria-pressed', isFav ? 'true' : 'false');
+          btn.setAttribute('aria-label', isFav ? 'Usuń z ulubionych' : 'Dodaj do ulubionych');
+        });
+      };
+
+      document.addEventListener('click', (e) => {
+        const btn = e.target.closest?.('.fav-btn');
+        if (!btn) return;
+        const card = btn.closest('.cam-item');
+        const id = card?.dataset?.id;
+        if (!id) return;
+        if (favorites.has(id)) favorites.delete(id);
+        else favorites.add(id);
+        saveFavs(favorites);
+        syncFavButtons();
+        applyFilters();
+      });
 
       if ('IntersectionObserver' in window) {
         const lazyObserver = new IntersectionObserver((entries, observer) => {
@@ -649,13 +894,21 @@
 
       function applyFilters() {
         const term = (q.value || '').trim().toLowerCase();
+        let visibleCount = 0;
         items.forEach(el => {
           const name = (el.dataset.name || '').toLowerCase();
           const cat = (el.dataset.cat || '').toLowerCase();
           const okTerm = !term || name.includes(term);
-          const okCat = (activeFilter === 'all') || (cat === activeFilter);
-          el.style.display = (okTerm && okCat) ? '' : 'none';
+          const isFav = favorites.has(el.dataset.id);
+          const okCat = (activeFilter === 'all') || (cat === activeFilter) || (activeFilter === 'fav' && isFav);
+          const isVisible = (okTerm && okCat);
+          el.style.display = isVisible ? '' : 'none';
+          if (isVisible) visibleCount++;
         });
+        if (emptyState) {
+          const showEmpty = activeFilter === 'fav' && visibleCount === 0;
+          emptyState.style.display = showEmpty ? 'block' : 'none';
+        }
       }
       q.addEventListener('input', applyFilters);
       chips.forEach(ch => {
@@ -674,6 +927,8 @@
           block: 'start'
         });
       });
+      syncFavButtons();
+      applyFilters();
       if ('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js');
     </script>
   </body>
