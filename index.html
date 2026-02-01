@@ -176,6 +176,76 @@
         border-color: var(--border);
       }
 
+      .share-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px;
+        border: 1px solid transparent;
+        border-radius: 999px;
+        background: transparent;
+        color: var(--text);
+        cursor: pointer;
+        transition: background 0.2s ease, border-color 0.2s ease;
+        flex-shrink: 0;
+        text-decoration: none;
+      }
+
+      .share-btn:hover {
+        background: var(--nav-hover);
+        border-color: var(--border);
+      }
+
+      .share-btn:active {
+        opacity: 0.8;
+      }
+
+      .share-btn svg {
+        width: 18px;
+        height: 18px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        opacity: 0.7;
+      }
+
+      .share-btn:hover svg {
+        opacity: 1;
+      }
+
+      .share-btn-mobile {
+        display: none;
+      }
+
+      /* Toast notification */
+      .toast {
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%) translateY(100px);
+        background: var(--card);
+        color: var(--text);
+        padding: 12px 20px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        font-size: 14px;
+        z-index: 10000;
+        opacity: 0;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        pointer-events: none;
+        max-width: calc(100% - 32px);
+        text-align: center;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+        pointer-events: auto;
+      }
+
       /* Hero */
       .hero {
         max-width: var(--max);
@@ -500,6 +570,11 @@
         .nav {
           display: none;
         }
+
+        .share-btn-mobile {
+          display: inline-flex;
+          margin-left: auto;
+        }
       }
     </style>
   </head>
@@ -510,9 +585,26 @@
           <div class="brand-badge"><img src="awesome-beskid-camera.svg" alt="Awesome Beskid Camera logo"></div>
           <div>Awesome Beskid Camera</div>
         </div>
-        <div class="nav"><a href="#bike">Bike</a><a href="#snow">Snow</a><a href="#weather">Pogoda</a></div>
+        <div class="nav">
+          <a href="#bike">Bike</a><a href="#snow">Snow</a><a href="#weather">Pogoda</a>
+          <button class="share-btn" type="button" aria-label="Udostępnij aplikację" title="Udostępnij">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none">
+              <path d="M9 7l3-3 3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12 4v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M5 10v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+        <button class="share-btn share-btn-mobile" type="button" aria-label="Udostępnij aplikację" title="Udostępnij">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none">
+            <path d="M9 7l3-3 3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 4v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M5 10v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
       </div>
     </header>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <section class="hero">
       <h1><span>Beskidy</span> na żywo.</h1>
       <p>Podgląd kamer z Beskidów w jednym miejscu stworzony na użytek osobisty autora.</p>
@@ -929,6 +1021,81 @@
       });
       syncFavButtons();
       applyFilters();
+
+      // Share functionality
+      const shareData = {
+        title: 'Awesome Beskid Camera',
+        text: 'Kamery na żywo z Beskidu Śląskiego i Żywieckiego. Bike i Snow w jednym miejscu.',
+        url: window.location.href
+      };
+
+      const toast = document.getElementById('toast');
+      const showToast = (message) => {
+        toast.textContent = message;
+        toast.classList.add('show');
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 3000);
+      };
+
+      const shareApp = async () => {
+        // Check if Web Share API is available (iOS 12.2+, Android Chrome 61+)
+        const canUseWebShare = navigator.share && 
+          (navigator.canShare ? navigator.canShare(shareData) : true) &&
+          (window.location.protocol === 'https:' || window.location.hostname === 'localhost');
+
+        if (canUseWebShare) {
+          try {
+            await navigator.share(shareData);
+            showToast('Udostępniono!');
+            return;
+          } catch (err) {
+            // User cancelled share (AbortError) - don't show error
+            if (err.name === 'AbortError') {
+              return;
+            }
+            // If share fails, fall through to clipboard fallback
+          }
+        }
+
+        // Fallback: copy to clipboard (works on all modern devices)
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(window.location.href);
+            showToast('Link skopiowany do schowka!');
+          } else {
+            // Fallback for older browsers: use execCommand
+            const input = document.createElement('input');
+            input.value = window.location.href;
+            input.style.position = 'fixed';
+            input.style.opacity = '0';
+            input.style.pointerEvents = 'none';
+            document.body.appendChild(input);
+            input.select();
+            input.setSelectionRange(0, 99999); // For mobile
+            try {
+              const success = document.execCommand('copy');
+              document.body.removeChild(input);
+              if (success) {
+                showToast('Link skopiowany do schowka!');
+              } else {
+                showToast('Nie udało się skopiować linku');
+              }
+            } catch (execErr) {
+              document.body.removeChild(input);
+              showToast('Nie udało się skopiować linku');
+            }
+          }
+        } catch (clipErr) {
+          showToast('Nie udało się skopiować linku');
+        }
+      };
+
+      const shareButtons = document.querySelectorAll('.share-btn, .share-btn-mobile');
+      shareButtons.forEach(btn => {
+        btn.addEventListener('click', shareApp);
+      });
+
       if ('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js');
     </script>
   </body>
