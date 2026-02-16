@@ -407,11 +407,20 @@
 
 
 
+      .frame-click-mask {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        cursor: pointer;
+        pointer-events: auto;
+      }
+
       .overlay {
         position: absolute;
         left: 12px;
         right: 12px;
         top: 12px;
+        z-index: 2;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -576,6 +585,184 @@
           margin-left: auto;
         }
       }
+
+      /* Fullscreen camera modal */
+      .cam-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 2000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity 0.25s ease, visibility 0.25s ease;
+      }
+
+      .cam-modal.open {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+      }
+
+      .cam-modal-backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+      }
+
+      .cam-modal-inner {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+        pointer-events: none;
+      }
+
+      .cam-modal-inner .cam-modal-close,
+      .cam-modal-inner .cam-modal-nav,
+      .cam-modal-inner .cam-modal-frame-wrap {
+        pointer-events: auto;
+      }
+
+      .cam-modal-close {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        z-index: 10;
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        display: grid;
+        place-items: center;
+        border: none;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.12);
+        color: #fff;
+        cursor: pointer;
+        transition: background 0.2s ease, transform 0.15s ease;
+      }
+
+      .cam-modal-close:hover {
+        background: rgba(255, 255, 255, 0.22);
+      }
+
+      .cam-modal-close:active {
+        transform: scale(0.96);
+      }
+
+      .cam-modal-close:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4);
+      }
+
+      .cam-modal-close svg {
+        width: 24px;
+        height: 24px;
+      }
+
+      .cam-modal-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+        width: 48px;
+        height: 48px;
+        min-width: 44px;
+        min-height: 44px;
+        padding: 0;
+        display: grid;
+        place-items: center;
+        border: none;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.12);
+        color: #fff;
+        cursor: pointer;
+        transition: background 0.2s ease, transform 0.15s ease;
+      }
+
+      .cam-modal-nav:hover {
+        background: rgba(255, 255, 255, 0.22);
+      }
+
+      .cam-modal-nav:active {
+        transform: translateY(-50%) scale(0.96);
+      }
+
+      .cam-modal-nav:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4);
+      }
+
+      .cam-modal-prev {
+        left: 12px;
+      }
+
+      .cam-modal-next {
+        right: 12px;
+      }
+
+      .cam-modal-nav svg {
+        width: 24px;
+        height: 24px;
+      }
+
+      .cam-modal-content {
+        position: absolute;
+        inset: 0;
+        min-width: 0;
+        min-height: 0;
+      }
+
+      .cam-modal-frame-wrap {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: min(100vw, calc(100vh * 16 / 9));
+        height: min(100vh, calc(100vw * 9 / 16));
+        min-width: 320px;
+        min-height: 180px;
+        background: #0f1218;
+        overflow: hidden;
+      }
+
+      .cam-modal-iframe {
+        display: block;
+        position: absolute;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        min-width: 100%;
+        min-height: 100%;
+        border: 0;
+      }
+
+      .cam-modal-label {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 10px 16px;
+        color: rgba(255, 255, 255, 0.95);
+        font-size: 14px;
+        font-weight: 600;
+        text-align: center;
+        text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+        pointer-events: none;
+      }
+
+      body.cam-modal-open {
+        overflow: hidden;
+      }
     </style>
   </head>
   <body>
@@ -629,6 +816,7 @@
       <div class="grid">
         <article class="card cam-item" data-cat="bike" data-name="Szyndzielnia – Schronisko">
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://player.webcamera.pl/enet24_cam_a07089" loading="lazy"></iframe>
+            <div class="frame-click-mask" aria-hidden="true"></div>
             <div class="overlay">
               <div class="label">Szyndzielnia – Schronisko</div>
               <div class="overlay-right">
@@ -644,6 +832,7 @@
         </article>
         <article class="card cam-item" data-cat="bike" data-name="Szyndzielnia – Polana">
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://embed.widoki.tv/?camera=szyndzielnia" loading="lazy"></iframe>
+            <div class="frame-click-mask" aria-hidden="true"></div>
             <div class="overlay">
               <div class="label">Szyndzielnia – Polana</div>
               <div class="overlay-right">
@@ -659,6 +848,7 @@
         </article>
         <article class="card cam-item" data-cat="bike" data-name="Magurka Wilkowicka">
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://streaming.ovh/Magurka/embed.html" loading="lazy"></iframe>
+            <div class="frame-click-mask" aria-hidden="true"></div>
             <div class="overlay">
               <div class="label">Magurka Wilkowicka</div>
               <div class="overlay-right">
@@ -679,6 +869,7 @@
       <div class="grid">
         <article class="card cam-item" data-cat="snow" data-name="Dębowiec – górna stacja">
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://stream.bbosir.bielsko.pl:8888/stok_gorna/" loading="lazy"></iframe>
+            <div class="frame-click-mask" aria-hidden="true"></div>
             <div class="overlay">
               <div class="label">Dębowiec – górna stacja</div>
               <div class="overlay-right">
@@ -694,6 +885,7 @@
         </article>
         <article class="card cam-item" data-cat="snow" data-name="Dębowiec – dolna stacja">
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://stream.bbosir.bielsko.pl:8888/stok_dolna/" loading="lazy"></iframe>
+            <div class="frame-click-mask" aria-hidden="true"></div>
             <div class="overlay">
               <div class="label">Dębowiec – dolna stacja</div>
               <div class="overlay-right">
@@ -709,6 +901,7 @@
         </article>
         <article class="card cam-item" data-cat="snow" data-name="Skrzyczne – FIS">
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://player.webcamera.pl/cos_cam_0e193b" loading="lazy"></iframe>
+            <div class="frame-click-mask" aria-hidden="true"></div>
             <div class="overlay">
               <div class="label">Skrzyczne – FIS</div>
               <div class="overlay-right">
@@ -724,6 +917,7 @@
         </article>
         <article class="card cam-item" data-cat="snow" data-name="Małe Skrzyczne – Hala Skrzeczeńska">
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://player.webcamera.pl/tmr_cam_c488d9" loading="lazy"></iframe>
+            <div class="frame-click-mask" aria-hidden="true"></div>
             <div class="overlay">
               <div class="label">Małe Skrzyczne – Hala Skrzeczeńska</div>
               <div class="overlay-right">
@@ -739,6 +933,7 @@
         </article>
         <article class="card cam-item" data-cat="snow" data-name="Solisko">
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://player.webcamera.pl/tmr_cam_21195a" loading="lazy"></iframe>
+            <div class="frame-click-mask" aria-hidden="true"></div>
             <div class="overlay">
               <div class="label">Solisko</div>
               <div class="overlay-right">
@@ -754,6 +949,7 @@
         </article>
         <article class="card cam-item" data-cat="snow" data-name="Pilsko – Miziowa">
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://video.itcom.pl/korbielow1/embed.html" loading="lazy"></iframe>
+            <div class="frame-click-mask" aria-hidden="true"></div>
             <div class="overlay">
               <div class="label">Pilsko – Miziowa</div>
               <div class="overlay-right">
@@ -769,6 +965,7 @@
         </article>
         <article class="card cam-item" data-cat="snow" data-name="Klepki">
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://polineo.pl:5443/LiveApp/play.html?name=Q8aJqj0p7sUXGep15093231011287407" loading="lazy"></iframe>
+            <div class="frame-click-mask" aria-hidden="true"></div>
             <div class="overlay">
               <div class="label">Klepki</div>
               <div class="overlay-right">
@@ -784,6 +981,7 @@
         </article>
         <article class="card cam-item" data-cat="snow" data-name="Biały Krzyż">
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://player.webcamera.pl/bialykrzyz_cam_b23041" loading="lazy"></iframe>
+            <div class="frame-click-mask" aria-hidden="true"></div>
             <div class="overlay">
               <div class="label">Biały Krzyż</div>
               <div class="overlay-right">
@@ -799,6 +997,7 @@
         </article>
         <article class="card cam-item" data-cat="snow" data-name="Zwardoń Ski">
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://player.webcamera.pl/zwardon_cam_9eb18f" loading="lazy"></iframe>
+            <div class="frame-click-mask" aria-hidden="true"></div>
             <div class="overlay">
               <div class="label">Zwardoń Ski</div>
               <div class="overlay-right">
@@ -814,6 +1013,7 @@
         </article>
         <article class="card cam-item" data-cat="snow" data-name="Rzyki – Czarny Groń">
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://player.webcamera.pl/czarnygron_cam_c0df65" loading="lazy"></iframe>
+            <div class="frame-click-mask" aria-hidden="true"></div>
             <div class="overlay">
               <div class="label">Rzyki – Czarny Groń</div>
               <div class="overlay-right">
@@ -829,6 +1029,7 @@
         </article>
         <article class="card cam-item" data-cat="snow" data-name="Czantoria">
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://player.webcamera.pl/czantoria_cam_2321a8" loading="lazy"></iframe>
+            <div class="frame-click-mask" aria-hidden="true"></div>
             <div class="overlay">
               <div class="label">Czantoria</div>
               <div class="overlay-right">
@@ -844,6 +1045,7 @@
         </article>
         <article class="card cam-item" data-cat="snow" data-name="Lisia Polana">
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://hoktastream3.webcamera.pl/lisiapolana_cam_bbd518/lisiapolana_cam_bbd518.stream/playlist.m3u8" loading="lazy"></iframe>
+            <div class="frame-click-mask" aria-hidden="true"></div>
             <div class="overlay">
               <div class="label">Lisia Polana</div>
               <div class="overlay-right">
@@ -864,6 +1066,7 @@
       <div class="grid">
         <article class="card cam-item" data-cat="snow" data-name="Windy">
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=default&metricTemp=default&metricWind=default&zoom=8&overlay=radar&product=ecmwf&level=surface&lat=49.873&lon=19.164" loading="lazy"></iframe>
+            <div class="frame-click-mask" aria-hidden="true"></div>
             <div class="overlay">
               <div class="label">Windy</div>
               <div class="overlay-right">
@@ -889,6 +1092,26 @@
         <p>Administrator strony nie czerpie korzyści finansowych z prezentowania transmisji oraz nie odpowiada za ich treść, jakość i dostępność. Wszelkie roszczenia dotyczące praw autorskich lub legalności transmisji należy kierować do właścicieli kamer.</p>
       </div>
     </footer>
+    <div id="cam-modal" class="cam-modal" role="dialog" aria-modal="true" aria-label="Podgląd kamery" aria-hidden="true">
+      <div class="cam-modal-backdrop"></div>
+      <div class="cam-modal-inner">
+        <button type="button" class="cam-modal-close" aria-label="Zamknij">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="cam-modal-nav cam-modal-prev" aria-label="Poprzednia kamera">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="cam-modal-content">
+          <div class="cam-modal-frame-wrap">
+            <iframe id="cam-modal-iframe" referrerpolicy="no-referrer" title="Podgląd kamery"></iframe>
+          </div>
+          <div class="cam-modal-label" id="cam-modal-label"></div>
+        </div>
+        <button type="button" class="cam-modal-nav cam-modal-next" aria-label="Następna kamera">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
     <script>
       const q = document.getElementById('q');
       const items = [...document.querySelectorAll('.cam-item')];
@@ -896,6 +1119,15 @@
       const lazyFrames = [...document.querySelectorAll('iframe.lazy-iframe')];
       const emptyState = document.getElementById('empty');
       let activeFilter = 'all';
+
+      const camModal = document.getElementById('cam-modal');
+      const camModalBackdrop = camModal?.querySelector('.cam-modal-backdrop');
+      const camModalClose = camModal?.querySelector('.cam-modal-close');
+      const camModalPrev = camModal?.querySelector('.cam-modal-prev');
+      const camModalNext = camModal?.querySelector('.cam-modal-next');
+      const camModalIframe = document.getElementById('cam-modal-iframe');
+      const camModalLabel = document.getElementById('cam-modal-label');
+      let currentModalIndex = -1;
 
       const FAV_STORAGE_KEY = 'abc:favorites:v1';
       const loadFavs = () => {
@@ -946,17 +1178,144 @@
         });
       };
 
+      function getCameraUrl(card) {
+        const frame = card?.querySelector('iframe');
+        if (!frame) return '';
+        return frame.getAttribute('src') || frame.dataset?.src || '';
+      }
+
+      function setModalIframeSize() {
+        const wrap = camModal?.querySelector('.cam-modal-frame-wrap');
+        if (!wrap || !camModalIframe) return;
+        const w = wrap.offsetWidth;
+        const h = wrap.offsetHeight;
+        camModalIframe.setAttribute('width', String(w));
+        camModalIframe.setAttribute('height', String(h));
+      }
+
+      function updateModalContent(index) {
+        if (index < 0 || index >= items.length || !camModalIframe || !camModalLabel) return;
+        const card = items[index];
+        const url = getCameraUrl(card);
+        const name = card?.dataset?.name || '';
+        const cat = card?.dataset?.cat || '';
+        const tag = cat === 'bike' ? 'Bike' : cat === 'snow' ? 'Snow' : '';
+        camModalIframe.src = url;
+        camModalLabel.textContent = tag ? `${name} · ${tag}` : name;
+        currentModalIndex = index;
+        const cardFrame = card?.querySelector('iframe');
+        if (cardFrame?.dataset?.src && !cardFrame.getAttribute('src')) {
+          cardFrame.src = cardFrame.dataset.src;
+          cardFrame.removeAttribute('data-src');
+        }
+        requestAnimationFrame(setModalIframeSize);
+      }
+
+      function openModal(index) {
+        if (index < 0 || index >= items.length || !camModal) return;
+        currentModalIndex = index;
+        updateModalContent(index);
+        camModal.classList.add('open');
+        camModal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('cam-modal-open');
+        const card = items[index];
+        if (card && !card.hasAttribute('tabindex')) card.setAttribute('tabindex', '-1');
+        camModalClose?.focus();
+        requestAnimationFrame(() => {
+          requestAnimationFrame(setModalIframeSize);
+        });
+      }
+
+      function closeModal() {
+        if (!camModal?.classList.contains('open')) return;
+        camModal.classList.remove('open');
+        camModal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('cam-modal-open');
+        if (camModalIframe) camModalIframe.src = '';
+        const card = items[currentModalIndex];
+        if (card) {
+          card.focus({ focusVisible: true });
+        }
+        currentModalIndex = -1;
+      }
+
+      function showPrev() {
+        if (items.length === 0) return;
+        const nextIndex = (currentModalIndex - 1 + items.length) % items.length;
+        updateModalContent(nextIndex);
+      }
+
+      function showNext() {
+        if (items.length === 0) return;
+        const nextIndex = (currentModalIndex + 1) % items.length;
+        updateModalContent(nextIndex);
+      }
+
       document.addEventListener('click', (e) => {
-        const btn = e.target.closest?.('.fav-btn');
-        if (!btn) return;
-        const card = btn.closest('.cam-item');
-        const id = card?.dataset?.id;
-        if (!id) return;
-        if (favorites.has(id)) favorites.delete(id);
-        else favorites.add(id);
-        saveFavs(favorites);
-        syncFavButtons();
-        applyFilters();
+        if (e.target.closest?.('.fav-btn')) {
+          const btn = e.target.closest('.fav-btn');
+          const card = btn.closest('.cam-item');
+          const id = card?.dataset?.id;
+          if (id) {
+            if (favorites.has(id)) favorites.delete(id);
+            else favorites.add(id);
+            saveFavs(favorites);
+            syncFavButtons();
+            applyFilters();
+          }
+          return;
+        }
+        if (e.target.closest?.('.cam-item')) {
+          const card = e.target.closest('.cam-item');
+          const idx = items.indexOf(card);
+          if (idx !== -1) openModal(idx);
+          return;
+        }
+        if (e.target === camModal || e.target === camModalBackdrop) {
+          closeModal();
+          return;
+        }
+        if (e.target.closest?.('.cam-modal-close')) {
+          closeModal();
+          return;
+        }
+        if (e.target.closest?.('.cam-modal-prev')) {
+          showPrev();
+          return;
+        }
+        if (e.target.closest?.('.cam-modal-next')) {
+          showNext();
+          return;
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (!camModal?.classList.contains('open')) return;
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          closeModal();
+          return;
+        }
+        if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          showPrev();
+          return;
+        }
+        if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          showNext();
+          return;
+        }
+      });
+
+      document.addEventListener('focusout', (e) => {
+        if (!camModal?.classList.contains('open')) return;
+        if (!camModal.contains(e.target)) return;
+        setTimeout(() => {
+          if (document.activeElement === camModalIframe || !camModal.contains(document.activeElement)) {
+            camModalClose?.focus();
+          }
+        }, 0);
       });
 
       if ('IntersectionObserver' in window) {
