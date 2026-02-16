@@ -136,6 +136,16 @@
         letter-spacing: -.2px;
         font-size: 14px;
       }
+      .brand .brand-title {
+        margin: 0;
+        font-size: inherit;
+        font-weight: inherit;
+        letter-spacing: inherit;
+      }
+      .brand em {
+        font-style: italic;
+        font-weight: normal;
+      }
 
       .brand-badge {
         overflow: hidden;
@@ -253,24 +263,6 @@
         padding: 28px 16px 10px 16px;
       }
 
-      .hero h1 {
-        margin: 0;
-        font-size: 38px;
-        letter-spacing: -1px;
-        line-height: 1.05;
-      }
-
-      .hero span {
-        color: var(--text-secondary);
-      }
-
-      .hero p {
-        margin: 10px 0 18px 0;
-        color: var(--muted);
-        font-size: 14px;
-        max-width: 72ch;
-      }
-
       .searchbar {
         height: 40px;
         cursor: text;
@@ -384,6 +376,13 @@
         overflow: hidden;
         box-shadow: var(--shadow);
       }
+      .card:focus,
+      .card:focus-visible {
+        outline: none;
+      }
+      .card:hover {
+        border-color: rgba(17, 17, 17, 0.18);
+      }
 
       .frame {
         position: relative;
@@ -391,6 +390,10 @@
         height: auto;
         min-height: 0;
         background: #fff;
+        overflow: hidden;
+      }
+      .frame:has(.weather-two-pics) {
+        background: #fffbf0;
       }
 
       .frame iframe {
@@ -405,7 +408,34 @@
         background: #0f1218;
       }
 
-
+      .weather-two-pics {
+        display: flex;
+        position: absolute;
+        inset: 0;
+        align-items: stretch;
+        justify-content: center;
+        gap: 0;
+      }
+      .weather-two-pics img {
+        display: block;
+        height: 100%;
+        width: auto;
+        margin: 0;
+        object-fit: contain;
+        object-position: left center;
+      }
+      .weather-two-pics img:first-child {
+        flex: 0 0 auto;
+        object-position: right center;
+      }
+      .weather-two-pics img:last-child {
+        flex: 0 0 auto;
+        min-width: 0;
+        height: 118.1%;
+        align-self: flex-end;
+        object-fit: contain;
+        object-position: left bottom;
+      }
 
       .frame-click-mask {
         position: absolute;
@@ -568,10 +598,6 @@
       }
 
       @media (max-width: 768px) {
-        .hero h1 {
-          font-size: 30px;
-        }
-
         .grid {
           grid-template-columns: 1fr;
         }
@@ -587,6 +613,12 @@
       }
 
       /* Fullscreen camera modal */
+      .cam-modal,
+      .cam-modal:focus,
+      .cam-modal:focus-visible {
+        outline: none;
+        border: none;
+      }
       .cam-modal {
         position: fixed;
         inset: 0;
@@ -615,6 +647,18 @@
         -webkit-backdrop-filter: blur(8px);
       }
 
+      .cam-modal-inner,
+      .cam-modal-inner:focus,
+      .cam-modal-inner:focus-visible,
+      .cam-modal-content,
+      .cam-modal-content:focus,
+      .cam-modal-content:focus-visible,
+      .cam-modal-images,
+      .cam-modal-images:focus,
+      .cam-modal-images:focus-visible {
+        outline: none;
+        border: none;
+      }
       .cam-modal-inner {
         position: absolute;
         inset: 0;
@@ -720,6 +764,12 @@
         min-height: 0;
       }
 
+      .cam-modal-frame-wrap,
+      .cam-modal-frame-wrap:focus,
+      .cam-modal-frame-wrap:focus-visible {
+        outline: none;
+        border: none;
+      }
       .cam-modal-frame-wrap {
         position: absolute;
         left: 50%;
@@ -732,6 +782,21 @@
         background: #0f1218;
         overflow: hidden;
       }
+      .cam-modal-images {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: min(100vw, calc(100vh * 16 / 9));
+        height: min(100vh, calc(100vw * 9 / 16));
+        min-width: 320px;
+        min-height: 180px;
+        background: #fffbf0;
+        overflow: hidden;
+      }
+      .cam-modal-images[hidden] {
+        display: none !important;
+      }
 
       .cam-modal-iframe {
         display: block;
@@ -743,6 +808,7 @@
         min-width: 100%;
         min-height: 100%;
         border: 0;
+        outline: none;
       }
 
       .cam-modal-label {
@@ -770,7 +836,7 @@
       <div class="topbar">
         <div class="brand">
           <div class="brand-badge"><img src="awesome-beskid-camera.svg" alt="Awesome Beskid Camera logo"></div>
-          <div>Awesome Beskid Camera</div>
+          <h1 class="brand-title">Awesome Beskid Camera<em> –&nbsp;Beskidy na kamerach na żywo</em></h1>
         </div>
         <div class="nav">
           <a href="#bike">Bike</a><a href="#snow">Snow</a><a href="#weather">Pogoda</a>
@@ -793,8 +859,6 @@
     </header>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <section class="hero">
-      <h1><span>Beskidy</span> na żywo.</h1>
-      <p>Podgląd kamer z Beskidów w jednym miejscu stworzony na użytek osobisty autora.</p>
       <div class="searchbar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2" />
           <path d="M16.5 16.5 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
@@ -1075,7 +1139,27 @@
                     <path d="M12 17.3l-6.18 3.64 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.67 1.64 7.03L12 17.3Z"></path>
                   </svg>
                 </button>
-                <div class="tag"></div>
+                <div class="tag">Pogoda</div>
+              </div>
+            </div>
+          </div>
+        </article>
+        <article class="card cam-item" data-cat="snow" data-name="meteo.pl, Bielsko-Biała">
+          <div class="frame">
+            <div class="frame-click-mask" aria-hidden="true"></div>
+            <div class="weather-two-pics" aria-hidden="true">
+              <img src="https://www.meteo.pl/um/metco/leg_um_pl_cbase_256.png" alt="Legenda mapy pogodowej" loading="lazy" />
+              <img src="https://old.meteo.pl/um/metco/mgram_pict.php?ntype=null&row=472&col=216&lang=pl" alt="Meteogram IMGW" loading="lazy" />
+            </div>
+            <div class="overlay">
+              <div class="label">meteo.pl, Bielsko-Biała</div>
+              <div class="overlay-right">
+                <button class="fav-btn" type="button" aria-label="Dodaj do ulubionych" aria-pressed="false">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M12 17.3l-6.18 3.64 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62 7.19.62-5.46 4.67 1.64 7.03L12 17.3Z"></path>
+                  </svg>
+                </button>
+                <div class="tag">Pogoda</div>
               </div>
             </div>
           </div>
@@ -1105,6 +1189,10 @@
           <div class="cam-modal-frame-wrap">
             <iframe id="cam-modal-iframe" referrerpolicy="no-referrer" title="Podgląd kamery"></iframe>
           </div>
+          <div class="cam-modal-images weather-two-pics" id="cam-modal-images" aria-hidden="true" hidden>
+            <img src="" alt="" />
+            <img src="" alt="" />
+          </div>
           <div class="cam-modal-label" id="cam-modal-label"></div>
         </div>
         <button type="button" class="cam-modal-nav cam-modal-next" aria-label="Następna kamera">
@@ -1127,6 +1215,7 @@
       const camModalNext = camModal?.querySelector('.cam-modal-next');
       const camModalIframe = document.getElementById('cam-modal-iframe');
       const camModalLabel = document.getElementById('cam-modal-label');
+      const camModalImages = document.getElementById('cam-modal-images');
       let currentModalIndex = -1;
 
       const FAV_STORAGE_KEY = 'abc:favorites:v1';
@@ -1180,8 +1269,10 @@
 
       function getCameraUrl(card) {
         const frame = card?.querySelector('iframe');
-        if (!frame) return '';
-        return frame.getAttribute('src') || frame.dataset?.src || '';
+        if (frame) return frame.getAttribute('src') || frame.dataset?.src || '';
+        const twoPics = card?.querySelector('.weather-two-pics');
+        if (twoPics && twoPics.querySelectorAll('img').length >= 2) return '#';
+        return '';
       }
 
       function setModalIframeSize() {
@@ -1199,8 +1290,33 @@
         const url = getCameraUrl(card);
         const name = card?.dataset?.name || '';
         const cat = card?.dataset?.cat || '';
-        const tag = cat === 'bike' ? 'Bike' : cat === 'snow' ? 'Snow' : '';
-        camModalIframe.src = url;
+        const twoPics = card?.querySelector('.weather-two-pics');
+        const isWeatherImages = twoPics && twoPics.querySelectorAll('img').length >= 2;
+        const isWeatherCard = card?.closest('.grid')?.previousElementSibling?.id === 'weather';
+        const tag = isWeatherCard ? 'Pogoda' : (cat === 'bike' ? 'Bike' : cat === 'snow' ? 'Snow' : '');
+        const frameWrap = camModal?.querySelector('.cam-modal-frame-wrap');
+        if (isWeatherImages && camModalImages) {
+          const imgs = twoPics.querySelectorAll('img');
+          const modalImg1 = camModalImages.querySelector('img:first-child');
+          const modalImg2 = camModalImages.querySelector('img:last-child');
+          if (modalImg1 && modalImg2 && imgs[0] && imgs[1]) {
+            modalImg1.src = imgs[0].src;
+            modalImg1.alt = imgs[0].alt || '';
+            modalImg2.src = imgs[1].src;
+            modalImg2.alt = imgs[1].alt || '';
+          }
+          camModalIframe.src = '';
+          if (frameWrap) frameWrap.hidden = true;
+          camModalImages.hidden = false;
+          camModalImages.setAttribute('aria-hidden', 'false');
+        } else {
+          camModalIframe.src = url;
+          if (frameWrap) frameWrap.hidden = false;
+          if (camModalImages) {
+            camModalImages.hidden = true;
+            camModalImages.setAttribute('aria-hidden', 'true');
+          }
+        }
         camModalLabel.textContent = tag ? `${name} · ${tag}` : name;
         currentModalIndex = index;
         const cardFrame = card?.querySelector('iframe');
@@ -1241,14 +1357,24 @@
 
       function showPrev() {
         if (items.length === 0) return;
-        const nextIndex = (currentModalIndex - 1 + items.length) % items.length;
-        updateModalContent(nextIndex);
+        for (let i = 0; i < items.length; i++) {
+          const nextIndex = (currentModalIndex - 1 - i + items.length) % items.length;
+          if (getCameraUrl(items[nextIndex])) {
+            updateModalContent(nextIndex);
+            return;
+          }
+        }
       }
 
       function showNext() {
         if (items.length === 0) return;
-        const nextIndex = (currentModalIndex + 1) % items.length;
-        updateModalContent(nextIndex);
+        for (let i = 0; i < items.length; i++) {
+          const nextIndex = (currentModalIndex + 1 + i) % items.length;
+          if (getCameraUrl(items[nextIndex])) {
+            updateModalContent(nextIndex);
+            return;
+          }
+        }
       }
 
       document.addEventListener('click', (e) => {
@@ -1268,7 +1394,7 @@
         if (e.target.closest?.('.cam-item')) {
           const card = e.target.closest('.cam-item');
           const idx = items.indexOf(card);
-          if (idx !== -1) openModal(idx);
+          if (idx !== -1 && getCameraUrl(card)) openModal(idx);
           return;
         }
         if (e.target === camModal || e.target === camModalBackdrop) {
