@@ -11,8 +11,6 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
     <link rel="manifest" href="manifest.json">
     <link rel="preload" href="logo.svg" as="image" fetchpriority="high" />
-    <link rel="preconnect" href="https://www.meteo.pl" crossorigin />
-    <link rel="preconnect" href="https://old.meteo.pl" crossorigin />
     <meta property="og:type" content="website">
     <meta property="og:title" content="Awesome Beskid Camera">
     <meta property="og:description" content="Kamery na żywo z Beskidu Śląskiego i Żywieckiego. Bike, Snow, warunki w górach w jednym miejscu.">
@@ -411,6 +409,16 @@
         width:calc(100% + 6px);
         height:calc(100% + 6px);
         border:0;
+      }
+
+      /* Aplikacje, które w wąskiej ramce pokazują widok mobilny (np. app.meteo.pl):
+         renderujemy w rozmiarze desktopowym i pomniejszamy do kafla (skala liczona w JS) */
+      .frame iframe.frame-scaled {
+        inset: 0;
+        width: 1280px;
+        height: 720px;
+        transform: scale(var(--frame-scale, .36));
+        transform-origin: 0 0;
       }
 
       .frame iframe[data-src] {
@@ -914,12 +922,8 @@
           </div>
         </article>
         <article class="card cam-item" data-cat="snow" data-name="meteo.pl, Bielsko-Biała">
-          <div class="frame">
+          <div class="frame"><iframe class="lazy-iframe frame-scaled" referrerpolicy="no-referrer" data-src="https://app.meteo.pl/meteogram/49.82,19.04" loading="lazy"></iframe>
             <div class="frame-click-mask" aria-hidden="true"></div>
-            <div class="weather-two-pics" aria-hidden="true">
-              <img src="https://www.meteo.pl/um/metco/leg_um_pl_cbase_256.png" alt="Legenda mapy pogodowej" loading="lazy" decoding="async" />
-              <img src="https://old.meteo.pl/um/metco/mgram_pict.php?ntype=null&row=472&col=216&lang=pl" alt="Meteogram IMGW" loading="lazy" decoding="async" />
-            </div>
             <div class="overlay">
               <div class="label">meteo.pl, Bielsko-Biała</div>
               <div class="overlay-right">
@@ -1238,6 +1242,17 @@
             frame.removeAttribute('data-src');
           }
         });
+      }
+
+      const scaledFrames = [...document.querySelectorAll('iframe.frame-scaled')];
+      if (scaledFrames.length && 'ResizeObserver' in window) {
+        const scaleObserver = new ResizeObserver(entries => {
+          entries.forEach(entry => {
+            const frame = entry.target.querySelector('iframe.frame-scaled');
+            if (frame) frame.style.setProperty('--frame-scale', String(entry.contentRect.width / 1280));
+          });
+        });
+        scaledFrames.forEach(frame => scaleObserver.observe(frame.parentElement));
       }
 
       function applyFilters() {
