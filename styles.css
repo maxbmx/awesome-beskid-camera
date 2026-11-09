@@ -60,6 +60,8 @@ footer {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  /* visibility od razu, żeby fokus mógł trafić na przycisk zamknięcia */
+  transition: opacity 0.25s ease, visibility 0s;
 }
 
 .cam-modal-backdrop {
