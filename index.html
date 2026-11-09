@@ -6,11 +6,17 @@
     <title>Awesome Beskid Camera – Wszystkie beskidzkie kamery w jednym miejscu</title>
     <meta name="description" content="Kamery na żywo z Beskidu Śląskiego i Żywieckiego. Bike i Snow w jednym miejscu.">
     <meta name="referrer" content="no-referrer">
+    <meta name="color-scheme" content="light dark">
+    <!-- Kolor paska przeglądarki = kolor nagłówka w danym motywie -->
+    <meta name="theme-color" content="#f6f7f8" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#2f2f31" media="(prefers-color-scheme: dark)">
     <link rel="icon" href="favicon.ico" sizes="32x32" />
     <link rel="icon" type="image/svg+xml" href="logo.svg" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
     <link rel="manifest" href="manifest.json">
     <link rel="preload" href="logo.svg" as="image" fetchpriority="high" />
+    <!-- 8 kamer z webcamera.pl: wcześniejsze połączenie (iframe to zwykła nawigacja, więc bez crossorigin) -->
+    <link rel="preconnect" href="https://imageserver.webcamera.pl" />
     <meta property="og:type" content="website">
     <meta property="og:title" content="Awesome Beskid Camera">
     <meta property="og:description" content="Kamery na żywo z Beskidu Śląskiego i Żywieckiego. Bike, Snow, warunki w górach w jednym miejscu.">
@@ -1305,29 +1311,24 @@
         currentModalIndex = -1;
       }
 
-      function showPrev() {
+      // Strzałki przechodzą tylko po kamerach widocznych po filtrze/wyszukiwaniu
+      // (gdy żadna nie jest widoczna, np. po wejściu z linku – po wszystkich)
+      function stepModal(dir) {
         if (items.length === 0) return;
-        for (let i = 0; i < items.length; i++) {
-          const nextIndex = (currentModalIndex - 1 - i + items.length) % items.length;
-          if (getCameraUrl(items[nextIndex])) {
-            updateModalContent(nextIndex);
-            history.replaceState(history.state, '', camHash(items[nextIndex]));
-            return;
-          }
+        const isVisible = card => card.style.display !== 'none';
+        const anyVisible = items.some(card => isVisible(card) && getCameraUrl(card));
+        for (let i = 1; i <= items.length; i++) {
+          const nextIndex = (currentModalIndex + dir * i + items.length * items.length) % items.length;
+          const card = items[nextIndex];
+          if (!getCameraUrl(card) || (anyVisible && !isVisible(card))) continue;
+          if (nextIndex === currentModalIndex) return;
+          updateModalContent(nextIndex);
+          history.replaceState(history.state, '', camHash(card));
+          return;
         }
       }
-
-      function showNext() {
-        if (items.length === 0) return;
-        for (let i = 0; i < items.length; i++) {
-          const nextIndex = (currentModalIndex + 1 + i) % items.length;
-          if (getCameraUrl(items[nextIndex])) {
-            updateModalContent(nextIndex);
-            history.replaceState(history.state, '', camHash(items[nextIndex]));
-            return;
-          }
-        }
-      }
+      const showPrev = () => stepModal(-1);
+      const showNext = () => stepModal(1);
 
       document.addEventListener('click', (e) => {
         if (e.target.closest?.('.fav-btn')) {
