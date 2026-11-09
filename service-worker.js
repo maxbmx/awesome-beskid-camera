@@ -1,4 +1,9 @@
-const CACHE_NAME = 'v6';
+// Strategia:
+// - dokument (HTML): najpierw sieć, offline – kopia z pamięci podręcznej,
+// - pozostałe pliki z tej domeny (CSS, ikony, manifest): stale-while-revalidate –
+//   od razu kopia z pamięci, a w tle pobranie nowszej wersji na następną wizytę.
+// Nowa wersja workera przejmuje stronę od razu (skipWaiting + clients.claim).
+const CACHE_NAME = 'v7';
 const CACHE_ASSETS = [
   './',
   './index.html',
@@ -14,18 +19,27 @@ const CACHE_ASSETS = [
 ];
 
 self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(CACHE_ASSETS))
-  );
+  event.waitUntil((async () => {
+    const cache = await caches.open(CACHE_NAME);
+    // cache: 'reload' – pomiń pamięć HTTP przeglądarki, żeby nie zapisać starych plików
+    await cache.addAll(CACHE_ASSETS.map(url => new Request(url, { cache: 'reload' })));
+    await self.skipWaiting();
+  })());
 });
 
 self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.map(key => (key === CACHE_NAME ? null : caches.delete(key))))
-    )
-  );
+  event.waitUntil((async () => {
+    const keys = await caches.keys();
+    await Promise.all(keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key)));
+    await self.clients.claim();
+  })());
 });
+
+const putInCache = async (req, res) => {
+  if (!res || !res.ok || res.type === 'opaque') return;
+  const cache = await caches.open(CACHE_NAME);
+  await cache.put(req, res);
+};
 
 self.addEventListener('fetch', event => {
   const req = event.request;
@@ -39,11 +53,10 @@ self.addEventListener('fetch', event => {
     event.respondWith((async () => {
       try {
         const fresh = await fetch(req);
-        const cache = await caches.open(CACHE_NAME);
-        cache.put(req, fresh.clone());
+        event.waitUntil(putInCache(req, fresh.clone()));
         return fresh;
       } catch (_) {
-        const cached = await caches.match(req);
+        const cached = await caches.match(req, { ignoreSearch: true });
         return cached || (await caches.match('./index.html')) || (await caches.match('./')) || Response.error();
       }
     })());
@@ -52,12 +65,15 @@ self.addEventListener('fetch', event => {
 
   event.respondWith((async () => {
     const cached = await caches.match(req);
-    if (cached) return cached;
-    const fresh = await fetch(req);
-    if (fresh && fresh.ok) {
-      const cache = await caches.open(CACHE_NAME);
-      cache.put(req, fresh.clone());
+    // no-cache: zapytaj serwer (warunkowo, 304 gdy bez zmian), a nie pamięć HTTP przeglądarki
+    const update = fetch(new Request(req, { cache: 'no-cache' })).then(async fresh => {
+      await putInCache(req, fresh.clone());
+      return fresh;
+    });
+    if (cached) {
+      event.waitUntil(update.catch(() => {}));
+      return cached;
     }
-    return fresh;
+    return update;
   })());
 });
