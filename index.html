@@ -658,7 +658,7 @@
       </div>
       <div class="grid">
         <article class="card cam-item" data-cat="bike" data-name="Szyndzielnia – Schronisko">
-          <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://player.webcamera.pl/enet24_cam_a07089" loading="lazy"></iframe>
+          <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://imageserver.webcamera.pl/umiesc/szyndzielnia" loading="lazy"></iframe>
             <div class="frame-click-mask" aria-hidden="true"></div>
             <div class="overlay">
               <div class="label">Szyndzielnia – Schronisko</div>
@@ -775,7 +775,7 @@
           </div>
         </article>
         <article class="card cam-item" data-cat="snow" data-name="Skrzyczne – FIS">
-          <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://player.webcamera.pl/cos_cam_0e193b" loading="lazy"></iframe>
+          <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://imageserver.webcamera.pl/umiesc/cos-szczyrk-jaworzyna" loading="lazy"></iframe>
             <div class="frame-click-mask" aria-hidden="true"></div>
             <div class="overlay">
               <div class="label">Skrzyczne – FIS</div>
@@ -791,7 +791,7 @@
           </div>
         </article>
         <article class="card cam-item" data-cat="snow" data-name="Małe Skrzyczne – Hala Skrzeczeńska">
-          <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://player.webcamera.pl/tmr_cam_c488d9" loading="lazy"></iframe>
+          <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://imageserver.webcamera.pl/umiesc/szczyrk-hala-skrzyczenska-2" loading="lazy"></iframe>
             <div class="frame-click-mask" aria-hidden="true"></div>
             <div class="overlay">
               <div class="label">Małe Skrzyczne – Hala Skrzeczeńska</div>
@@ -807,7 +807,7 @@
           </div>
         </article>
         <article class="card cam-item" data-cat="snow" data-name="Solisko">
-          <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://player.webcamera.pl/tmr_cam_21195a" loading="lazy"></iframe>
+          <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://imageserver.webcamera.pl/umiesc/szczyrk-solisko" loading="lazy"></iframe>
             <div class="frame-click-mask" aria-hidden="true"></div>
             <div class="overlay">
               <div class="label">Solisko</div>
@@ -855,7 +855,7 @@
           </div>
         </article>
         <article class="card cam-item" data-cat="snow" data-name="Biały Krzyż">
-          <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://player.webcamera.pl/bialykrzyz_cam_b23041" loading="lazy"></iframe>
+          <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://imageserver.webcamera.pl/umiesc/bialy-krzyz" loading="lazy"></iframe>
             <div class="frame-click-mask" aria-hidden="true"></div>
             <div class="overlay">
               <div class="label">Biały Krzyż</div>
@@ -871,7 +871,7 @@
           </div>
         </article>
         <article class="card cam-item" data-cat="snow" data-name="Zwardoń Ski">
-          <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://player.webcamera.pl/zwardon_cam_9eb18f" loading="lazy"></iframe>
+          <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://imageserver.webcamera.pl/umiesc/zwardon-ski" loading="lazy"></iframe>
             <div class="frame-click-mask" aria-hidden="true"></div>
             <div class="overlay">
               <div class="label">Zwardoń Ski</div>
@@ -887,7 +887,7 @@
           </div>
         </article>
         <article class="card cam-item" data-cat="snow" data-name="Rzyki – Czarny Groń">
-          <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://player.webcamera.pl/czarnygron_cam_c0df65" loading="lazy"></iframe>
+          <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://imageserver.webcamera.pl/umiesc/czarnygron-stok2" loading="lazy"></iframe>
             <div class="frame-click-mask" aria-hidden="true"></div>
             <div class="overlay">
               <div class="label">Rzyki – Czarny Groń</div>
@@ -1012,6 +1012,17 @@
       const items = [...document.querySelectorAll('.cam-item')];
       const chips = [...document.querySelectorAll('.chip')];
       const lazyFrames = [...document.querySelectorAll('iframe.lazy-iframe')];
+      // Zmiana src istniejącej ramki dopisuje wpis do historii przeglądarki (Wstecz cofałby wewnątrz ramki).
+      // Dlatego ramkę podmieniamy na świeżą kopię z nowym adresem – nowy element nie zostawia śladu w historii.
+      function swapFrameSrc(frame, url) {
+        if (!frame) return frame;
+        if ((frame.getAttribute('src') || '') === (url || '')) return frame;
+        const fresh = frame.cloneNode(false);
+        if (url) fresh.src = url;
+        else fresh.removeAttribute('src');
+        frame.replaceWith(fresh);
+        return fresh;
+      }
       const emptyState = document.getElementById('empty');
       let activeFilter = 'all';
 
@@ -1020,7 +1031,7 @@
       const camModalClose = camModal?.querySelector('.cam-modal-close');
       const camModalPrev = camModal?.querySelector('.cam-modal-prev');
       const camModalNext = camModal?.querySelector('.cam-modal-next');
-      const camModalIframe = document.getElementById('cam-modal-iframe');
+      let camModalIframe = document.getElementById('cam-modal-iframe');
       const camModalLabel = document.getElementById('cam-modal-label');
       const camModalImages = document.getElementById('cam-modal-images');
       let currentModalIndex = -1;
@@ -1050,18 +1061,38 @@
         .replace(/-+/g, '-')
         .replace(/^-|-$/g, '');
 
-      const getItemId = (el) => {
+      const getItemId = (el, srcOverride) => {
         const name = el.dataset.name || '';
         const cat = el.dataset.cat || '';
-        const src = el.querySelector('iframe')?.dataset?.src || el.querySelector('iframe')?.getAttribute('src') || '';
+        const src = srcOverride || el.querySelector('iframe')?.dataset?.src || el.querySelector('iframe')?.getAttribute('src') || '';
         const srcKey = src ? src.replace(/^https?:\/\//, '').slice(0, 80) : '';
         return `${slug(cat)}:${slug(name)}:${slug(srcKey)}`;
       };
 
+      // Kamery webcamera.pl osadzamy bezpośrednio (bez przekierowania z player.webcamera.pl,
+      // które dopisywało wpis do historii). Stare ID ulubionych przenosimy na nowe adresy.
+      const LEGACY_SRC = {
+        'https://imageserver.webcamera.pl/umiesc/szyndzielnia': 'https://player.webcamera.pl/enet24_cam_a07089',
+        'https://imageserver.webcamera.pl/umiesc/cos-szczyrk-jaworzyna': 'https://player.webcamera.pl/cos_cam_0e193b',
+        'https://imageserver.webcamera.pl/umiesc/szczyrk-hala-skrzyczenska-2': 'https://player.webcamera.pl/tmr_cam_c488d9',
+        'https://imageserver.webcamera.pl/umiesc/szczyrk-solisko': 'https://player.webcamera.pl/tmr_cam_21195a',
+        'https://imageserver.webcamera.pl/umiesc/bialy-krzyz': 'https://player.webcamera.pl/bialykrzyz_cam_b23041',
+        'https://imageserver.webcamera.pl/umiesc/zwardon-ski': 'https://player.webcamera.pl/zwardon_cam_9eb18f',
+        'https://imageserver.webcamera.pl/umiesc/czarnygron-stok2': 'https://player.webcamera.pl/czarnygron_cam_c0df65'
+      };
       let favorites = loadFavs();
+      let favsMigrated = false;
       items.forEach(el => {
         el.dataset.id = getItemId(el);
+        const oldSrc = LEGACY_SRC[el.querySelector('iframe')?.dataset?.src];
+        const oldId = oldSrc && getItemId(el, oldSrc);
+        if (oldId && favorites.has(oldId)) {
+          favorites.delete(oldId);
+          favorites.add(el.dataset.id);
+          favsMigrated = true;
+        }
       });
+      if (favsMigrated) saveFavs(favorites);
 
       const syncFavButtons = () => {
         items.forEach(el => {
@@ -1111,12 +1142,12 @@
             modalImg2.src = imgs[1].src;
             modalImg2.alt = imgs[1].alt || '';
           }
-          camModalIframe.src = '';
+          camModalIframe = swapFrameSrc(camModalIframe, '');
           if (frameWrap) frameWrap.hidden = true;
           camModalImages.hidden = false;
           camModalImages.setAttribute('aria-hidden', 'false');
         } else {
-          camModalIframe.src = url;
+          camModalIframe = swapFrameSrc(camModalIframe, url);
           if (frameWrap) frameWrap.hidden = false;
           if (camModalImages) {
             camModalImages.hidden = true;
@@ -1128,8 +1159,27 @@
         requestAnimationFrame(setModalIframeSize);
       }
 
-      function openModal(index) {
+      // Każda kamera ma własny adres (#kamera-szyndzielnia-polana). Otwarcie podglądu dodaje wpis
+      // do historii, więc Wstecz w przeglądarce lub na Androidzie zamyka podgląd zamiast opuszczać stronę.
+      const camSlug = card => 'kamera-' + (card?.dataset?.name || '')
+        .toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ł/g, 'l')
+        .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+      const camHash = card => '#' + camSlug(card);
+      const indexFromHash = () => {
+        const hash = decodeURIComponent(location.hash || '');
+        if (!hash.startsWith('#kamera-')) return -1;
+        return items.findIndex(card => camHash(card) === hash && getCameraUrl(card));
+      };
+      const isModalOpen = () => !!camModal?.classList.contains('open');
+      let modalBaseKey = null; // wpis historii sprzed otwarcia podglądu (Navigation API)
+      const pushCamState = card => {
+        modalBaseKey = window.navigation?.currentEntry?.key || null;
+        history.pushState({ cam: true }, '', camHash(card));
+      };
+
+      function openModal(index, { fromHistory = false } = {}) {
         if (index < 0 || index >= items.length || !camModal) return;
+        if (!fromHistory && !isModalOpen()) pushCamState(items[index]);
         currentModalIndex = index;
         updateModalContent(index);
         camModal.classList.add('open');
@@ -1145,11 +1195,32 @@
       }
 
       function closeModal() {
-        if (!camModal?.classList.contains('open')) return;
+        if (!isModalOpen()) return;
+        // Wpis dodany przez podgląd – cofamy się, a popstate zamknie podgląd
+        if (history.state?.cam) {
+          // traverseTo przeskakuje też wpisy, które mogły dopisać ramki z kamerami
+          if (modalBaseKey && window.navigation?.traverseTo) {
+            const nav = navigation.traverseTo(modalBaseKey);
+            nav.committed.catch(() => {});
+            nav.finished.catch(() => {
+              history.replaceState(null, '', location.pathname + location.search);
+              hideModal();
+            });
+          } else {
+            history.back();
+          }
+          return;
+        }
+        history.replaceState(null, '', location.pathname + location.search);
+        hideModal();
+      }
+
+      function hideModal() {
+        if (!isModalOpen()) return;
         camModal.classList.remove('open');
         camModal.setAttribute('aria-hidden', 'true');
         document.body.classList.remove('cam-modal-open');
-        if (camModalIframe) camModalIframe.src = '';
+        camModalIframe = swapFrameSrc(camModalIframe, '');
         syncTileFrames();
         const card = items[currentModalIndex];
         if (card) {
@@ -1164,6 +1235,7 @@
           const nextIndex = (currentModalIndex - 1 - i + items.length) % items.length;
           if (getCameraUrl(items[nextIndex])) {
             updateModalContent(nextIndex);
+            history.replaceState(history.state, '', camHash(items[nextIndex]));
             return;
           }
         }
@@ -1175,6 +1247,7 @@
           const nextIndex = (currentModalIndex + 1 + i) % items.length;
           if (getCameraUrl(items[nextIndex])) {
             updateModalContent(nextIndex);
+            history.replaceState(history.state, '', camHash(items[nextIndex]));
             return;
           }
         }
@@ -1248,22 +1321,17 @@
       });
 
       // Kafle odtwarzają obraz tylko wtedy, gdy są w pobliżu ekranu i nie zasłania ich podgląd.
-      // Adres kamery zostaje w data-src, a ramka poza ekranem wraca do about:blank,
+      // Adres kamery zostaje w data-src, a ramka poza ekranem traci src,
       // żeby nie pobierać strumieni, których nikt nie ogląda.
+      const frameWraps = lazyFrames.map(frame => frame.parentElement);
       const nearViewport = new Set();
-      const loadFrame = frame => {
-        const src = frame.dataset.src;
-        if (src && frame.getAttribute('src') !== src) frame.src = src;
-      };
-      const unloadFrame = frame => {
-        const src = frame.getAttribute('src');
-        if (src && src !== 'about:blank') frame.src = 'about:blank';
-      };
       function syncTileFrames() {
         const modalOpen = camModal?.classList.contains('open');
-        lazyFrames.forEach(frame => {
-          if (!modalOpen && nearViewport.has(frame)) loadFrame(frame);
-          else unloadFrame(frame);
+        frameWraps.forEach(wrap => {
+          const frame = wrap.querySelector('iframe.lazy-iframe');
+          if (!frame) return;
+          const show = !modalOpen && nearViewport.has(wrap);
+          swapFrameSrc(frame, show ? frame.dataset.src : '');
         });
       }
 
@@ -1278,9 +1346,9 @@
           syncTileFrames();
         }, { rootMargin });
 
-        lazyFrames.forEach(frame => lazyObserver.observe(frame));
+        frameWraps.forEach(wrap => lazyObserver.observe(wrap));
       } else {
-        lazyFrames.forEach(frame => nearViewport.add(frame));
+        frameWraps.forEach(wrap => nearViewport.add(wrap));
         syncTileFrames();
       }
 
@@ -1329,6 +1397,14 @@
         });
       }
       q.addEventListener('input', applyFilters);
+
+      window.addEventListener('popstate', () => {
+        const idx = indexFromHash();
+        if (idx === -1) hideModal();
+        else if (!isModalOpen()) openModal(idx, { fromHistory: true });
+        else if (idx !== currentModalIndex) updateModalContent(idx);
+      });
+
       chips.forEach(ch => {
         ch.addEventListener('click', () => {
           chips.forEach(x => x.classList.remove('active'));
@@ -1352,7 +1428,7 @@
       const shareData = {
         title: 'Awesome Beskid Camera',
         text: 'Kamery na żywo z Beskidu Śląskiego i Żywieckiego. Bike i Snow w jednym miejscu.',
-        url: window.location.href
+        url: location.origin + location.pathname
       };
 
       const toast = document.getElementById('toast');
@@ -1421,6 +1497,18 @@
       shareButtons.forEach(btn => {
         btn.addEventListener('click', shareApp);
       });
+
+      // Wejście z linku do kamery: pod nim zostaje strona główna, więc Wstecz zamknie podgląd
+      {
+        const idx = indexFromHash();
+        if (idx !== -1) {
+          const hash = location.hash;
+          history.replaceState(null, '', location.pathname + location.search);
+          modalBaseKey = window.navigation?.currentEntry?.key || null;
+          history.pushState({ cam: true }, '', hash);
+          openModal(idx, { fromHistory: true });
+        }
+      }
 
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
