@@ -343,7 +343,8 @@
         max-width: var(--max);
         margin: 0 auto;
         padding: 12px 16px 24px 16px;
-        min-height: 200vh;
+        /* zapas jednego ekranu, żeby wyszukiwarka mogła przewinąć się na górę przy małej liczbie wyników */
+        min-height: 100vh;
       }
 
       .section-title {
@@ -645,6 +646,7 @@
         <div class="chip" data-filter="fav">Ulubione</div>
         <div class="chip" data-filter="bike">Bike</div>
         <div class="chip" data-filter="snow">Snow</div>
+        <div class="chip" data-filter="weather">Pogoda</div>
       </div>
     </section>
     <main class="container">
@@ -937,7 +939,7 @@
         <h2>Pogoda</h2><span>Prognozy pogody dla Beskidów</span>
       </div>
       <div class="grid">
-        <article class="card cam-item" data-cat="snow" data-name="Windy">
+        <article class="card cam-item" data-cat="weather" data-name="Windy">
           <div class="frame"><iframe class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=default&metricTemp=default&metricWind=default&zoom=8&overlay=radar&product=ecmwf&level=surface&lat=49.873&lon=19.164" loading="lazy"></iframe>
             <div class="frame-click-mask" aria-hidden="true"></div>
             <div class="overlay">
@@ -953,7 +955,7 @@
             </div>
           </div>
         </article>
-        <article class="card cam-item" data-cat="snow" data-name="meteo.pl, Bielsko-Biała">
+        <article class="card cam-item" data-cat="weather" data-name="meteo.pl, Bielsko-Biała">
           <div class="frame"><iframe class="lazy-iframe frame-scaled" referrerpolicy="no-referrer" data-src="https://app.meteo.pl/meteogram/49.82,19.04" loading="lazy"></iframe>
             <div class="frame-click-mask" aria-hidden="true"></div>
             <div class="overlay">
@@ -1097,8 +1099,7 @@
         const cat = card?.dataset?.cat || '';
         const twoPics = card?.querySelector('.weather-two-pics');
         const isWeatherImages = twoPics && twoPics.querySelectorAll('img').length >= 2;
-        const isWeatherCard = card?.closest('.grid')?.previousElementSibling?.id === 'weather';
-        const tag = isWeatherCard ? 'Pogoda' : (cat === 'bike' ? 'Bike' : cat === 'snow' ? 'Snow' : '');
+        const tag = { bike: 'Bike', snow: 'Snow', weather: 'Pogoda' }[cat] || '';
         const frameWrap = camModal?.querySelector('.cam-modal-frame-wrap');
         if (isWeatherImages && camModalImages) {
           const imgs = twoPics.querySelectorAll('img');
@@ -1304,6 +1305,13 @@
           const showEmpty = activeFilter === 'fav' && visibleCount === 0;
           emptyState.style.display = showEmpty ? 'block' : 'none';
         }
+        // Ukryj nagłówek i siatkę sekcji, w której nie został żaden widoczny kafel
+        document.querySelectorAll('.grid').forEach(grid => {
+          const hasVisible = [...grid.querySelectorAll('.cam-item')].some(el => el.style.display !== 'none');
+          grid.style.display = hasVisible ? '' : 'none';
+          const title = grid.previousElementSibling;
+          if (title?.classList.contains('section-title')) title.style.display = hasVisible ? '' : 'none';
+        });
       }
       q.addEventListener('input', applyFilters);
       chips.forEach(ch => {
