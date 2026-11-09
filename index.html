@@ -397,7 +397,7 @@
         aspect-ratio: 16 / 9;
         height: auto;
         min-height: 0;
-        background: #fff;
+        background: #0f1218;
         overflow: hidden;
       }
       .frame:has(.weather-two-pics) {
@@ -422,8 +422,44 @@
         transform-origin: 0 0;
       }
 
-      .frame iframe[data-src] {
-        background: #0f1218;
+      /* Ładowanie kafla: ciemne tło i kółko, ramka pojawia się płynnie po zdarzeniu load */
+      .frame iframe,
+      .cam-modal-frame-wrap iframe {
+        opacity: 0;
+        transition: opacity .35s ease;
+      }
+      .frame.is-loaded iframe,
+      .cam-modal-frame-wrap.is-loaded iframe {
+        opacity: 1;
+      }
+      .frame::before,
+      .cam-modal-frame-wrap::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 28px;
+        height: 28px;
+        margin: -14px 0 0 -14px;
+        border-radius: 50%;
+        border: 3px solid rgba(255, 255, 255, .15);
+        border-top-color: rgba(255, 255, 255, .7);
+        animation: frame-spin .9s linear infinite;
+        transition: opacity .2s ease;
+      }
+      .frame.is-loaded::before,
+      .cam-modal-frame-wrap.is-loaded::before {
+        opacity: 0;
+        animation: none;
+      }
+      @keyframes frame-spin {
+        to { transform: rotate(360deg); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .frame::before,
+        .cam-modal-frame-wrap::before { animation: none; }
+        .frame iframe,
+        .cam-modal-frame-wrap iframe { transition: none; }
       }
 
       .weather-two-pics {
@@ -1018,8 +1054,17 @@
         if (!frame) return frame;
         if ((frame.getAttribute('src') || '') === (url || '')) return frame;
         const fresh = frame.cloneNode(false);
-        if (url) fresh.src = url;
-        else fresh.removeAttribute('src');
+        const wrap = frame.parentElement;
+        wrap?.classList.remove('is-loaded');
+        if (url) {
+          fresh.src = url;
+          // Pokaż ramkę po załadowaniu (albo po 10 s, gdyby load nie nadszedł)
+          const reveal = () => { if (fresh.isConnected) wrap?.classList.add('is-loaded'); };
+          fresh.addEventListener('load', reveal, { once: true });
+          setTimeout(reveal, 10000);
+        } else {
+          fresh.removeAttribute('src');
+        }
         frame.replaceWith(fresh);
         return fresh;
       }
