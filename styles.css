@@ -1,0 +1,254 @@
+/* Footer + copy */
+footer {
+  background: var(--footer-bg);
+  color: var(--footer-text);
+  margin-top: 24px;
+}
+
+.footer-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.author {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.fineprint {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 14px 16px 22px 16px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.fineprint ul {
+  margin: 8px 0 0 18px;
+}
+
+/* Fullscreen camera modal */
+.cam-modal,
+.cam-modal:focus,
+.cam-modal:focus-visible {
+  outline: none;
+  border: none;
+}
+.cam-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.cam-modal.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.cam-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.cam-modal-inner,
+.cam-modal-inner:focus,
+.cam-modal-inner:focus-visible,
+.cam-modal-content,
+.cam-modal-content:focus,
+.cam-modal-content:focus-visible,
+.cam-modal-images,
+.cam-modal-images:focus,
+.cam-modal-images:focus-visible {
+  outline: none;
+  border: none;
+}
+.cam-modal-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  pointer-events: none;
+}
+
+.cam-modal-inner .cam-modal-close,
+.cam-modal-inner .cam-modal-nav,
+.cam-modal-inner .cam-modal-frame-wrap {
+  pointer-events: auto;
+}
+
+.cam-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 10;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.cam-modal-close:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.cam-modal-close:active {
+  transform: scale(0.96);
+}
+
+.cam-modal-close:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4);
+}
+
+.cam-modal-close svg {
+  width: 24px;
+  height: 24px;
+}
+
+.cam-modal-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 48px;
+  height: 48px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.cam-modal-nav:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.cam-modal-nav:active {
+  transform: translateY(-50%) scale(0.96);
+}
+
+.cam-modal-nav:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4);
+}
+
+.cam-modal-prev {
+  left: 12px;
+}
+
+.cam-modal-next {
+  right: 12px;
+}
+
+.cam-modal-nav svg {
+  width: 24px;
+  height: 24px;
+}
+
+.cam-modal-content {
+  position: absolute;
+  inset: 0;
+  min-width: 0;
+  min-height: 0;
+}
+
+.cam-modal-frame-wrap,
+.cam-modal-frame-wrap:focus,
+.cam-modal-frame-wrap:focus-visible {
+  outline: none;
+  border: none;
+}
+.cam-modal-frame-wrap {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(100vw, calc(100vh * 16 / 9));
+  height: min(100vh, calc(100vw * 9 / 16));
+  min-width: 320px;
+  min-height: 180px;
+  background: #0f1218;
+  overflow: hidden;
+}
+.cam-modal-images {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(100vw, calc(100vh * 16 / 9));
+  height: min(100vh, calc(100vw * 9 / 16));
+  min-width: 320px;
+  min-height: 180px;
+  background: #fffbf0;
+  overflow: hidden;
+}
+.cam-modal-images[hidden] {
+  display: none !important;
+}
+
+.cam-modal-iframe {
+  display: block;
+  position: absolute;
+  left: 0 !important;
+  top: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 100%;
+  min-height: 100%;
+  border: 0;
+  outline: none;
+}
+
+.cam-modal-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px 16px;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+  pointer-events: none;
+}
+
+body.cam-modal-open {
+  overflow: hidden;
+}
