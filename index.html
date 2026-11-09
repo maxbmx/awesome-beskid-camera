@@ -1288,11 +1288,16 @@
         scaledFrames.forEach(frame => scaleObserver.observe(frame.parentElement));
       }
 
+      // Wyszukiwanie bez względu na polskie znaki: „Lysa” znajdzie „Łysa”, „szczyrk” – „Szczyrk”
+      const normalize = str => (str || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ł/g, 'l');
+      const EMPTY_FAV_TEXT = 'Brak ulubionych. Kliknij gwiazdkę na kamerze, aby dodać ją do ulubionych.';
+
       function applyFilters() {
-        const term = (q.value || '').trim().toLowerCase();
+        const rawTerm = (q.value || '').trim();
+        const term = normalize(rawTerm);
         let visibleCount = 0;
         items.forEach(el => {
-          const name = (el.dataset.name || '').toLowerCase();
+          const name = normalize(el.dataset.name);
           const cat = (el.dataset.cat || '').toLowerCase();
           const okTerm = !term || name.includes(term);
           const isFav = favorites.has(el.dataset.id);
@@ -1302,7 +1307,10 @@
           if (isVisible) visibleCount++;
         });
         if (emptyState) {
-          const showEmpty = activeFilter === 'fav' && visibleCount === 0;
+          const showEmpty = visibleCount === 0;
+          emptyState.textContent = term
+            ? `Brak wyników dla „${rawTerm}”${activeFilter !== 'all' ? ' w tej kategorii' : ''}. Spróbuj innej nazwy${activeFilter !== 'all' ? ' lub wybierz „Wszystkie”' : ''}.`
+            : EMPTY_FAV_TEXT;
           emptyState.style.display = showEmpty ? 'block' : 'none';
         }
         // Ukryj nagłówek i siatkę sekcji, w której nie został żaden widoczny kafel
