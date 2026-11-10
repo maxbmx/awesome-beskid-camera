@@ -1,6 +1,13 @@
 {
   "name": "Awesome Beskid Camera",
-  "short_name": "AwBeCam",
+  "short_name": "Beskid Cam",
+  "description": "Kamery na żywo z Beskidu Śląskiego i Żywieckiego. Bike, Snow i pogoda w jednym miejscu.",
+  "lang": "pl",
+  "categories": [
+    "sports",
+    "travel",
+    "weather"
+  ],
   "start_url": ".",
   "display": "standalone",
   "background_color": "#0f1218",

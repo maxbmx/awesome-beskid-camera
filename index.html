@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Awesome Beskid Camera – Wszystkie beskidzkie kamery w jednym miejscu</title>
-    <meta name="description" content="Kamery na żywo z Beskidu Śląskiego i Żywieckiego. Bike i Snow w jednym miejscu.">
+    <meta name="description" content="Kamery na żywo z Beskidu Śląskiego i Żywieckiego: Szczyrk, Skrzyczne, Szyndzielnia, Wisła, Czantoria, Pilsko, Góra Żar. Bike, Snow i pogoda w jednym miejscu.">
     <meta name="referrer" content="no-referrer">
     <!-- SEO: strona może być indeksowana; duże podglądy obrazów w wynikach -->
     <meta name="robots" content="index, follow, max-image-preview:large">
@@ -17,21 +17,231 @@
     <link rel="icon" type="image/svg+xml" href="logo.svg" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
     <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-title" content="Beskid Cam">
+    <meta name="application-name" content="Beskid Cam">
     <link rel="preload" href="logo.svg" as="image" fetchpriority="high" />
     <!-- 8 kamer z webcamera.pl: wcześniejsze połączenie (iframe to zwykła nawigacja, więc bez crossorigin) -->
     <link rel="preconnect" href="https://imageserver.webcamera.pl" />
     <meta property="og:type" content="website">
     <meta property="og:title" content="Awesome Beskid Camera">
     <meta property="og:description" content="Kamery na żywo z Beskidu Śląskiego i Żywieckiego. Bike, Snow, warunki w górach w jednym miejscu.">
-    <meta property="og:image:width" content="512">
-    <meta property="og:image:height" content="512">
-    <meta property="og:image" content="https://maxbmx.github.io/awesome-beskid-camera/awesome-beskid-camera.png">
+    <meta property="og:locale" content="pl_PL">
+    <!-- Podgląd linku w komunikatorach i mediach społecznościowych: 1200×630 -->
+    <meta property="og:image" content="https://maxbmx.github.io/awesome-beskid-camera/og-image.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Awesome Beskid Camera – kamery na żywo z Beskidu Śląskiego i Żywieckiego">
     <meta property="og:url" content="https://maxbmx.github.io/awesome-beskid-camera/">
     <meta property="og:site_name" content="Awesome Beskid Camera">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Awesome Beskid Camera">
     <meta name="twitter:description" content="Kamery na żywo z Beskidu Śląskiego i Żywieckiego. Bike, Snow, warunki w górach w jednym miejscu.">
-    <meta name="twitter:image" content="https://maxbmx.github.io/awesome-beskid-camera/awesome-beskid-camera.png">
+    <meta name="twitter:image" content="https://maxbmx.github.io/awesome-beskid-camera/og-image.png">
+    <!-- Dane strukturalne dla wyszukiwarek. Po dodaniu lub usunięciu kamery zaktualizuj listę ItemList. -->
+    <script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebSite",
+   "@id": "https://maxbmx.github.io/awesome-beskid-camera/#website",
+   "url": "https://maxbmx.github.io/awesome-beskid-camera/",
+   "name": "Awesome Beskid Camera",
+   "alternateName": "Beskid Cam",
+   "inLanguage": "pl",
+   "description": "Kamery na żywo z Beskidu Śląskiego i Żywieckiego: Szczyrk, Skrzyczne, Szyndzielnia, Wisła, Czantoria, Pilsko, Góra Żar. Bike, Snow i pogoda w jednym miejscu.",
+   "image": "https://maxbmx.github.io/awesome-beskid-camera/og-image.png",
+   "author": {
+    "@type": "Person",
+    "name": "Maksymilian Śleziak"
+   }
+  },
+  {
+   "@type": "ItemList",
+   "@id": "https://maxbmx.github.io/awesome-beskid-camera/#kamery",
+   "name": "Kamery na żywo – Beskid Śląski i Żywiecki",
+   "numberOfItems": 29,
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Szyndzielnia – Schronisko",
+     "url": "https://maxbmx.github.io/awesome-beskid-camera/#kamera-szyndzielnia-schronisko"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Szyndzielnia – Polana",
+     "url": "https://maxbmx.github.io/awesome-beskid-camera/#kamera-szyndzielnia-polana"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Szyndzielnia – Wieża ZIAD Tower",
+     "url": "https://maxbmx.github.io/awesome-beskid-camera/#kamera-szyndzielnia-wieza-ziad-tower"
+    },
+    {
+     "@type": "ListItem",
+     "position": 4,
+     "name": "Szyndzielnia – Kolej linowa",
+     "url": "https://maxbmx.github.io/awesome-beskid-camera/#kamera-szyndzielnia-kolej-linowa"
+    },
+    {
+     "@type": "ListItem",
+     "position": 5,
+     "name": "Magurka Wilkowicka",
+     "url": "https://maxbmx.github.io/awesome-beskid-camera/#kamera-magurka-wilkowicka"
+    },
+    {
+     "@type": "ListItem",
+     "position": 6,
+     "name": "Szczyrk – Gondola SMR",
+     "url": "https://maxbmx.github.io/awesome-beskid-camera/#kamera-szczyrk-gondola-smr"
+    },
+    {
+     "@type": "ListItem",
+     "position": 7,
+     "name": "Wisła – Skolnity Ski&Bike",
+     "url": "https://maxbmx.github.io/awesome-beskid-camera/#kamera-wisla-skolnity-ski-bike"
+    },
+    {
+     "@type": "ListItem",
+     "position": 8,
+     "name": "Wisła – Skolnity, wieża widokowa",
+     "url": "https://maxbmx.github.io/awesome-beskid-camera/#kamera-wisla-skolnity-wieza-widokowa"
+    },
+    {
+     "@type": "ListItem",
+     "position": 9,
+     "name": "Czantoria – kolej",
+     "url": "https://maxbmx.github.io/awesome-beskid-camera/#kamera-czantoria-kolej"
+    },
+    {
+     "@type": "ListItem",
+     "position": 10,
+     "name": "Góra Żar – kolej PKL",
+     "url": "https://maxbmx.github.io/awesome-beskid-camera/#kamera-gora-zar-kolej-pkl"
+    },
+    {
+     "@type": "ListItem",
+     "position": 11,
+     "name": "Góra Żar – panorama",
+     "url": "https://maxbmx.github.io/awesome-beskid-camera/#kamera-gora-zar-panorama"
+    },
+    {
+     "@type": "ListItem",
+     "position": 12,
+     "name": "Dębowiec – górna stacja",
+     "url": "https://maxbmx.github.io/awesome-beskid-camera/#kamera-debowiec-gorna-stacja"
+    },
+    {
+     "@type": "ListItem",
+     "position": 13,
+     "name": "Dębowiec – dolna stacja",
+     "url": "https://maxbmx.github.io/awesome-beskid-camera/#kamera-debowiec-dolna-stacja"
+    },
+    {
+     "@type": "ListItem",
+     "position": 14,
+     "name": "Skrzyczne – FIS",
+     "url": "https://maxbmx.github.io/awesome-beskid-camera/#kamera-skrzyczne-fis"
+    },
+    {
+     "@type": "ListItem",
+     "position": 15,
+     "name": "Skrzyczne – szczyt",
+     "url": "https://maxbmx.github.io/awesome-beskid-camera/#kamera-skrzyczne-szczyt"
+    },
+    {
+     "@type": "ListItem",
+     "position": 16,
+     "name": "Małe Skrzyczne – Hala Skrzeczeńska",
+     "url": "https://maxbmx.github.io/awesome-beskid-camera/#kamera-male-skrzyczne-hala-skrzeczenska"
+    },
+    {
+     "@type": "ListItem",
+     "position": 17,
+     "name": "Solisko",
+     "url": "https://maxbmx.github.io/awesome-beskid-camera/#kamera-solisko"
+    },
+    {
+     "@type": "ListItem",
+     "position": 18,
+     "name": "Szczyrk – Zbójnicka Kopa",
+     "url": "https://maxbmx.github.io/awesome-beskid-camera/#kamera-szczyrk-zbojnicka-kopa"
+    },
+    {
+     "@type": "ListItem",
+     "position": 19,
+     "name": "Szczyrk – Beskid Sport Arena",
+     "url": "https://maxbmx.github.io/awesome-beskid-camera/#kamera-szczyrk-beskid-sport-arena"
+    },
+    {
+     "@type": "ListItem",
+     "position": 20,
+     "name": "Pilsko – Miziowa",
+     "url": "https://maxbmx.github.io/awesome-beskid-camera/#kamera-pilsko-miziowa"
+    },
+    {
+     "@type": "ListItem",
+     "position": 21,
+     "name": "Zawoja – Mosorny Groń",
+     "url": "https://maxbmx.github.io/awesome-beskid-camera/#kamera-zawoja-mosorny-gron"
+    },
+    {
+     "@type": "ListItem",
+     "position": 22,
+     "name": "Klepki",
+     "url": "https://maxbmx.github.io/awesome-beskid-camera/#kamera-klepki"
+    },
+    {
+     "@type": "ListItem",
+     "position": 23,
+     "name": "Wisła – Cieńków",
+     "url": "https://maxbmx.github.io/awesome-beskid-camera/#kamera-wisla-cienkow"
+    },
+    {
+     "@type": "ListItem",
+     "position": 24,
+     "name": "Istebna – Złoty Groń",
+     "url": "https://maxbmx.github.io/awesome-beskid-camera/#kamera-istebna-zloty-gron"
+    },
+    {
+     "@type": "ListItem",
+     "position": 25,
+     "name": "Biały Krzyż",
+     "url": "https://maxbmx.github.io/awesome-beskid-camera/#kamera-bialy-krzyz"
+    },
+    {
+     "@type": "ListItem",
+     "position": 26,
+     "name": "Zwardoń Ski",
+     "url": "https://maxbmx.github.io/awesome-beskid-camera/#kamera-zwardon-ski"
+    },
+    {
+     "@type": "ListItem",
+     "position": 27,
+     "name": "Rzyki – Czarny Groń",
+     "url": "https://maxbmx.github.io/awesome-beskid-camera/#kamera-rzyki-czarny-gron"
+    },
+    {
+     "@type": "ListItem",
+     "position": 28,
+     "name": "Czantoria",
+     "url": "https://maxbmx.github.io/awesome-beskid-camera/#kamera-czantoria"
+    },
+    {
+     "@type": "ListItem",
+     "position": 29,
+     "name": "Lisia Polana",
+     "url": "https://maxbmx.github.io/awesome-beskid-camera/#kamera-lisia-polana"
+    }
+   ]
+  }
+ ]
+}
+    </script>
     <style>
       :root {
         --bg: #f6f7f8;
@@ -349,6 +559,27 @@
         flex-wrap: wrap;
       }
 
+      /* Miejsca: na telefonie jeden wiersz przewijany w bok, żeby nie spychać kamer w dół */
+      .chips-region {
+        margin-top: 8px;
+      }
+      .chips-region .chip {
+        flex: none;
+      }
+      @media (max-width: 768px) {
+        .chips-region {
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          margin: 0 -16px;
+          padding: 8px 16px; /* miejsce na powiększone pole dotyku i obrys fokusu */
+          scrollbar-width: none;
+          -webkit-overflow-scrolling: touch;
+        }
+        .chips-region::-webkit-scrollbar {
+          display: none;
+        }
+      }
+
       .chip {
         border: 1px solid var(--border);
         background: var(--chip-bg);
@@ -402,9 +633,16 @@
         letter-spacing: .2px;
       }
 
+      .section-title h2 {
+        white-space: nowrap;
+      }
+
       .section-title span {
         color: var(--muted);
         font-size: 12px;
+        line-height: 1.35;
+        text-align: right;
+        text-wrap: balance;
       }
 
       .grid {
@@ -807,16 +1045,25 @@
         <button type="button" class="chip" data-filter="snow" aria-pressed="false">Snow</button>
         <button type="button" class="chip" data-filter="weather" aria-pressed="false">Pogoda</button>
       </div>
+      <!-- Filtr miejsca: łączy się z kategorią powyżej; kafle pogody nie mają miejsca i są widoczne zawsze -->
+      <div class="chips chips-region" role="group" aria-label="Miejsce">
+        <button type="button" class="chip active" data-region="all" aria-pressed="true">Całe Beskidy</button>
+        <button type="button" class="chip" data-region="bielsko" aria-pressed="false">Bielsko-Biała</button>
+        <button type="button" class="chip" data-region="szczyrk" aria-pressed="false">Szczyrk</button>
+        <button type="button" class="chip" data-region="wisla" aria-pressed="false">Wisła i Ustroń</button>
+        <button type="button" class="chip" data-region="zywiecki" aria-pressed="false">Żywiecki</button>
+        <button type="button" class="chip" data-region="maly" aria-pressed="false">Beskid Mały</button>
+      </div>
     </section>
     <main class="container">
       <div id="empty" class="empty-state" role="status" aria-live="polite">
         Brak ulubionych. Kliknij gwiazdkę na kamerze, aby dodać ją do ulubionych.
       </div>
       <div class="section-title" id="bike">
-        <h2>Bike</h2><span>Kamery pod jazdę enduro MTB</span>
+        <h2>Bike</h2><span>Kamery pod jazdę enduro MTB: Szyndzielnia, Magurka, Szczyrk, Wisła, Czantoria, Góra Żar</span>
       </div>
       <div class="grid">
-        <article class="card cam-item" data-cat="bike" data-name="Szyndzielnia – Schronisko">
+        <article class="card cam-item" data-cat="bike" data-region="bielsko" data-name="Szyndzielnia – Schronisko">
           <div class="frame"><iframe title="Kamera: Szyndzielnia – Schronisko" tabindex="-1" class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://imageserver.webcamera.pl/umiesc/szyndzielnia" loading="lazy"></iframe>
             <button type="button" class="frame-click-mask" aria-label="Otwórz podgląd: Szyndzielnia – Schronisko"></button>
             <div class="overlay">
@@ -832,7 +1079,7 @@
             </div>
           </div>
         </article>
-        <article class="card cam-item" data-cat="bike" data-name="Szyndzielnia – Polana">
+        <article class="card cam-item" data-cat="bike" data-region="bielsko" data-name="Szyndzielnia – Polana">
           <div class="frame"><iframe title="Kamera: Szyndzielnia – Polana" tabindex="-1" class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://embed.widoki.tv/?camera=szyndzielnia" loading="lazy"></iframe>
             <button type="button" class="frame-click-mask" aria-label="Otwórz podgląd: Szyndzielnia – Polana"></button>
             <div class="overlay">
@@ -848,7 +1095,7 @@
             </div>
           </div>
         </article>
-        <article class="card cam-item" data-cat="bike" data-name="Szyndzielnia – Wieża ZIAD Tower">
+        <article class="card cam-item" data-cat="bike" data-region="bielsko" data-name="Szyndzielnia – Wieża ZIAD Tower">
           <div class="frame"><iframe title="Kamera: Szyndzielnia – Wieża ZIAD Tower" tabindex="-1" class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://kamery.euro-lan.pl:8080/stream/stream.html?src=kamera1&mode=webrtc,mse,hls,mjpeg&autoplay=true&muted=true" loading="lazy"></iframe>
             <button type="button" class="frame-click-mask" aria-label="Otwórz podgląd: Szyndzielnia – Wieża ZIAD Tower"></button>
             <div class="overlay">
@@ -864,7 +1111,7 @@
             </div>
           </div>
         </article>
-        <article class="card cam-item" data-cat="bike" data-name="Szyndzielnia – Kolej linowa">
+        <article class="card cam-item" data-cat="bike" data-region="bielsko" data-name="Szyndzielnia – Kolej linowa">
           <div class="frame"><iframe title="Kamera: Szyndzielnia – Kolej linowa" tabindex="-1" class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://kamery.euro-lan.pl:8080/stream/stream.html?src=kamera3&mode=webrtc,mse,hls,mjpeg&autoplay=true&muted=true" loading="lazy"></iframe>
             <button type="button" class="frame-click-mask" aria-label="Otwórz podgląd: Szyndzielnia – Kolej linowa"></button>
             <div class="overlay">
@@ -880,7 +1127,7 @@
             </div>
           </div>
         </article>
-        <article class="card cam-item" data-cat="bike" data-name="Magurka Wilkowicka">
+        <article class="card cam-item" data-cat="bike" data-region="bielsko" data-name="Magurka Wilkowicka">
           <div class="frame"><iframe title="Kamera: Magurka Wilkowicka" tabindex="-1" class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://streaming.ovh/Magurka/embed.html" loading="lazy"></iframe>
             <button type="button" class="frame-click-mask" aria-label="Otwórz podgląd: Magurka Wilkowicka"></button>
             <div class="overlay">
@@ -896,7 +1143,7 @@
             </div>
           </div>
         </article>
-        <article class="card cam-item" data-cat="bike" data-name="Szczyrk – Gondola SMR">
+        <article class="card cam-item" data-cat="bike" data-region="szczyrk" data-name="Szczyrk – Gondola SMR">
           <div class="frame"><iframe title="Kamera: Szczyrk – Gondola SMR" tabindex="-1" class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://imageserver.webcamera.pl/umiesc/szczyrk-gondola" loading="lazy"></iframe>
             <button type="button" class="frame-click-mask" aria-label="Otwórz podgląd: Szczyrk – Gondola SMR"></button>
             <div class="overlay">
@@ -912,7 +1159,7 @@
             </div>
           </div>
         </article>
-        <article class="card cam-item" data-cat="bike" data-name="Wisła – Skolnity Ski&amp;Bike">
+        <article class="card cam-item" data-cat="bike" data-region="wisla" data-name="Wisła – Skolnity Ski&amp;Bike">
           <div class="frame"><iframe title="Kamera: Wisła – Skolnity Ski&amp;Bike" tabindex="-1" class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://imageserver.webcamera.pl/umiesc/skolnity-2" loading="lazy"></iframe>
             <button type="button" class="frame-click-mask" aria-label="Otwórz podgląd: Wisła – Skolnity Ski&amp;Bike"></button>
             <div class="overlay">
@@ -928,7 +1175,7 @@
             </div>
           </div>
         </article>
-        <article class="card cam-item" data-cat="bike" data-name="Wisła – Skolnity, wieża widokowa">
+        <article class="card cam-item" data-cat="bike" data-region="wisla" data-name="Wisła – Skolnity, wieża widokowa">
           <div class="frame"><iframe title="Kamera: Wisła – Skolnity, wieża widokowa" tabindex="-1" class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://imageserver.webcamera.pl/umiesc/skolnity-wieza-widokowa" loading="lazy"></iframe>
             <button type="button" class="frame-click-mask" aria-label="Otwórz podgląd: Wisła – Skolnity, wieża widokowa"></button>
             <div class="overlay">
@@ -944,7 +1191,7 @@
             </div>
           </div>
         </article>
-        <article class="card cam-item" data-cat="bike" data-name="Czantoria – kolej">
+        <article class="card cam-item" data-cat="bike" data-region="wisla" data-name="Czantoria – kolej">
           <div class="frame"><iframe title="Kamera: Czantoria – kolej" tabindex="-1" class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://imageserver.webcamera.pl/umiesc/czantoria3" loading="lazy"></iframe>
             <button type="button" class="frame-click-mask" aria-label="Otwórz podgląd: Czantoria – kolej"></button>
             <div class="overlay">
@@ -960,7 +1207,7 @@
             </div>
           </div>
         </article>
-        <article class="card cam-item" data-cat="bike" data-name="Góra Żar – kolej PKL">
+        <article class="card cam-item" data-cat="bike" data-region="maly" data-name="Góra Żar – kolej PKL">
           <div class="frame"><iframe title="Kamera: Góra Żar – kolej PKL" tabindex="-1" class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://imageserver.webcamera.pl/umiesc/gorazar" loading="lazy"></iframe>
             <button type="button" class="frame-click-mask" aria-label="Otwórz podgląd: Góra Żar – kolej PKL"></button>
             <div class="overlay">
@@ -976,7 +1223,7 @@
             </div>
           </div>
         </article>
-        <article class="card cam-item" data-cat="bike" data-name="Góra Żar – panorama">
+        <article class="card cam-item" data-cat="bike" data-region="maly" data-name="Góra Żar – panorama">
           <div class="frame"><iframe title="Kamera: Góra Żar – panorama" tabindex="-1" class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://imageserver.webcamera.pl/umiesc/gorazar2" loading="lazy"></iframe>
             <button type="button" class="frame-click-mask" aria-label="Otwórz podgląd: Góra Żar – panorama"></button>
             <div class="overlay">
@@ -994,10 +1241,10 @@
         </article>
       </div>
       <div class="section-title" id="snow" style="margin-top:26px;">
-        <h2>Ski & Snowboard</h2><span>Kamery internetowe ze stoków narciarskich</span>
+        <h2>Ski &amp; Snowboard</h2><span>Kamery ze stoków narciarskich: Szczyrk, Skrzyczne, Pilsko, Wisła, Istebna, Zwardoń, Zawoja</span>
       </div>
       <div class="grid">
-        <article class="card cam-item" data-cat="snow" data-name="Dębowiec – górna stacja">
+        <article class="card cam-item" data-cat="snow" data-region="bielsko" data-name="Dębowiec – górna stacja">
           <div class="frame"><iframe title="Kamera: Dębowiec – górna stacja" tabindex="-1" class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://stream.bbosir.bielsko.pl:8888/stok_gorna/" loading="lazy"></iframe>
             <button type="button" class="frame-click-mask" aria-label="Otwórz podgląd: Dębowiec – górna stacja"></button>
             <div class="overlay">
@@ -1013,7 +1260,7 @@
             </div>
           </div>
         </article>
-        <article class="card cam-item" data-cat="snow" data-name="Dębowiec – dolna stacja">
+        <article class="card cam-item" data-cat="snow" data-region="bielsko" data-name="Dębowiec – dolna stacja">
           <div class="frame"><iframe title="Kamera: Dębowiec – dolna stacja" tabindex="-1" class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://stream.bbosir.bielsko.pl:8888/stok_dolna/" loading="lazy"></iframe>
             <button type="button" class="frame-click-mask" aria-label="Otwórz podgląd: Dębowiec – dolna stacja"></button>
             <div class="overlay">
@@ -1029,7 +1276,7 @@
             </div>
           </div>
         </article>
-        <article class="card cam-item" data-cat="snow" data-name="Skrzyczne – FIS">
+        <article class="card cam-item" data-cat="snow" data-region="szczyrk" data-name="Skrzyczne – FIS">
           <div class="frame"><iframe title="Kamera: Skrzyczne – FIS" tabindex="-1" class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://imageserver.webcamera.pl/umiesc/cos-szczyrk-jaworzyna" loading="lazy"></iframe>
             <button type="button" class="frame-click-mask" aria-label="Otwórz podgląd: Skrzyczne – FIS"></button>
             <div class="overlay">
@@ -1045,7 +1292,7 @@
             </div>
           </div>
         </article>
-        <article class="card cam-item" data-cat="snow" data-name="Skrzyczne – szczyt">
+        <article class="card cam-item" data-cat="snow" data-region="szczyrk" data-name="Skrzyczne – szczyt">
           <div class="frame"><iframe title="Kamera: Skrzyczne – szczyt" tabindex="-1" class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://imageserver.webcamera.pl/umiesc/cos-szczyrk" loading="lazy"></iframe>
             <button type="button" class="frame-click-mask" aria-label="Otwórz podgląd: Skrzyczne – szczyt"></button>
             <div class="overlay">
@@ -1061,7 +1308,7 @@
             </div>
           </div>
         </article>
-        <article class="card cam-item" data-cat="snow" data-name="Małe Skrzyczne – Hala Skrzeczeńska">
+        <article class="card cam-item" data-cat="snow" data-region="szczyrk" data-name="Małe Skrzyczne – Hala Skrzeczeńska">
           <div class="frame"><iframe title="Kamera: Małe Skrzyczne – Hala Skrzeczeńska" tabindex="-1" class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://imageserver.webcamera.pl/umiesc/szczyrk-hala-skrzyczenska-2" loading="lazy"></iframe>
             <button type="button" class="frame-click-mask" aria-label="Otwórz podgląd: Małe Skrzyczne – Hala Skrzeczeńska"></button>
             <div class="overlay">
@@ -1077,7 +1324,7 @@
             </div>
           </div>
         </article>
-        <article class="card cam-item" data-cat="snow" data-name="Solisko">
+        <article class="card cam-item" data-cat="snow" data-region="szczyrk" data-name="Solisko">
           <div class="frame"><iframe title="Kamera: Solisko" tabindex="-1" class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://imageserver.webcamera.pl/umiesc/szczyrk-solisko" loading="lazy"></iframe>
             <button type="button" class="frame-click-mask" aria-label="Otwórz podgląd: Solisko"></button>
             <div class="overlay">
@@ -1093,7 +1340,7 @@
             </div>
           </div>
         </article>
-        <article class="card cam-item" data-cat="snow" data-name="Szczyrk – Zbójnicka Kopa">
+        <article class="card cam-item" data-cat="snow" data-region="szczyrk" data-name="Szczyrk – Zbójnicka Kopa">
           <div class="frame"><iframe title="Kamera: Szczyrk – Zbójnicka Kopa" tabindex="-1" class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://imageserver.webcamera.pl/umiesc/szczyrk-zbojnicka-kopa" loading="lazy"></iframe>
             <button type="button" class="frame-click-mask" aria-label="Otwórz podgląd: Szczyrk – Zbójnicka Kopa"></button>
             <div class="overlay">
@@ -1109,7 +1356,7 @@
             </div>
           </div>
         </article>
-        <article class="card cam-item" data-cat="snow" data-name="Szczyrk – Beskid Sport Arena">
+        <article class="card cam-item" data-cat="snow" data-region="szczyrk" data-name="Szczyrk – Beskid Sport Arena">
           <div class="frame"><iframe title="Kamera: Szczyrk – Beskid Sport Arena" tabindex="-1" class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://imageserver.webcamera.pl/umiesc/beskidsport" loading="lazy"></iframe>
             <button type="button" class="frame-click-mask" aria-label="Otwórz podgląd: Szczyrk – Beskid Sport Arena"></button>
             <div class="overlay">
@@ -1125,7 +1372,7 @@
             </div>
           </div>
         </article>
-        <article class="card cam-item" data-cat="snow" data-name="Pilsko – Miziowa">
+        <article class="card cam-item" data-cat="snow" data-region="zywiecki" data-name="Pilsko – Miziowa">
           <div class="frame"><iframe title="Kamera: Pilsko – Miziowa" tabindex="-1" class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://video.itcom.pl/korbielow1/embed.html" loading="lazy"></iframe>
             <button type="button" class="frame-click-mask" aria-label="Otwórz podgląd: Pilsko – Miziowa"></button>
             <div class="overlay">
@@ -1141,7 +1388,7 @@
             </div>
           </div>
         </article>
-        <article class="card cam-item" data-cat="snow" data-name="Zawoja – Mosorny Groń">
+        <article class="card cam-item" data-cat="snow" data-region="zywiecki" data-name="Zawoja – Mosorny Groń">
           <div class="frame"><iframe title="Kamera: Zawoja – Mosorny Groń" tabindex="-1" class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://imageserver.webcamera.pl/umiesc/zawoja" loading="lazy"></iframe>
             <button type="button" class="frame-click-mask" aria-label="Otwórz podgląd: Zawoja – Mosorny Groń"></button>
             <div class="overlay">
@@ -1157,7 +1404,7 @@
             </div>
           </div>
         </article>
-        <article class="card cam-item" data-cat="snow" data-name="Klepki">
+        <article class="card cam-item" data-cat="snow" data-region="wisla" data-name="Klepki">
           <div class="frame"><iframe title="Kamera: Klepki" tabindex="-1" class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://polineo.pl:5443/LiveApp/play.html?name=Q8aJqj0p7sUXGep15093231011287407" loading="lazy"></iframe>
             <button type="button" class="frame-click-mask" aria-label="Otwórz podgląd: Klepki"></button>
             <div class="overlay">
@@ -1173,7 +1420,7 @@
             </div>
           </div>
         </article>
-        <article class="card cam-item" data-cat="snow" data-name="Wisła – Cieńków">
+        <article class="card cam-item" data-cat="snow" data-region="wisla" data-name="Wisła – Cieńków">
           <div class="frame"><iframe title="Kamera: Wisła – Cieńków" tabindex="-1" class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://imageserver.webcamera.pl/umiesc/wisla-cienkow" loading="lazy"></iframe>
             <button type="button" class="frame-click-mask" aria-label="Otwórz podgląd: Wisła – Cieńków"></button>
             <div class="overlay">
@@ -1189,7 +1436,7 @@
             </div>
           </div>
         </article>
-        <article class="card cam-item" data-cat="snow" data-name="Istebna – Złoty Groń">
+        <article class="card cam-item" data-cat="snow" data-region="wisla" data-name="Istebna – Złoty Groń">
           <div class="frame"><iframe title="Kamera: Istebna – Złoty Groń" tabindex="-1" class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://imageserver.webcamera.pl/umiesc/zlotygron" loading="lazy"></iframe>
             <button type="button" class="frame-click-mask" aria-label="Otwórz podgląd: Istebna – Złoty Groń"></button>
             <div class="overlay">
@@ -1205,7 +1452,7 @@
             </div>
           </div>
         </article>
-        <article class="card cam-item" data-cat="snow" data-name="Biały Krzyż">
+        <article class="card cam-item" data-cat="snow" data-region="szczyrk" data-name="Biały Krzyż">
           <div class="frame"><iframe title="Kamera: Biały Krzyż" tabindex="-1" class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://imageserver.webcamera.pl/umiesc/bialy-krzyz" loading="lazy"></iframe>
             <button type="button" class="frame-click-mask" aria-label="Otwórz podgląd: Biały Krzyż"></button>
             <div class="overlay">
@@ -1221,7 +1468,7 @@
             </div>
           </div>
         </article>
-        <article class="card cam-item" data-cat="snow" data-name="Zwardoń Ski">
+        <article class="card cam-item" data-cat="snow" data-region="zywiecki" data-name="Zwardoń Ski">
           <div class="frame"><iframe title="Kamera: Zwardoń Ski" tabindex="-1" class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://imageserver.webcamera.pl/umiesc/zwardon-ski" loading="lazy"></iframe>
             <button type="button" class="frame-click-mask" aria-label="Otwórz podgląd: Zwardoń Ski"></button>
             <div class="overlay">
@@ -1237,7 +1484,7 @@
             </div>
           </div>
         </article>
-        <article class="card cam-item" data-cat="snow" data-name="Rzyki – Czarny Groń">
+        <article class="card cam-item" data-cat="snow" data-region="maly" data-name="Rzyki – Czarny Groń">
           <div class="frame"><iframe title="Kamera: Rzyki – Czarny Groń" tabindex="-1" class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://imageserver.webcamera.pl/umiesc/czarnygron-stok2" loading="lazy"></iframe>
             <button type="button" class="frame-click-mask" aria-label="Otwórz podgląd: Rzyki – Czarny Groń"></button>
             <div class="overlay">
@@ -1253,7 +1500,7 @@
             </div>
           </div>
         </article>
-        <article class="card cam-item" data-cat="snow" data-name="Czantoria">
+        <article class="card cam-item" data-cat="snow" data-region="wisla" data-name="Czantoria">
           <div class="frame"><iframe title="Kamera: Czantoria" tabindex="-1" class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://player.webcamera.pl/czantoria_cam_2321a8" loading="lazy"></iframe>
             <button type="button" class="frame-click-mask" aria-label="Otwórz podgląd: Czantoria"></button>
             <div class="overlay">
@@ -1269,7 +1516,7 @@
             </div>
           </div>
         </article>
-        <article class="card cam-item" data-cat="snow" data-name="Lisia Polana">
+        <article class="card cam-item" data-cat="snow" data-region="wisla" data-name="Lisia Polana">
           <div class="frame"><iframe title="Kamera: Lisia Polana" tabindex="-1" class="lazy-iframe" referrerpolicy="no-referrer" data-src="https://imageserver.webcamera.pl/umiesc/lisia-polana-ustron-kamera" loading="lazy"></iframe>
             <button type="button" class="frame-click-mask" aria-label="Otwórz podgląd: Lisia Polana"></button>
             <div class="overlay">
@@ -1287,7 +1534,7 @@
         </article>
       </div>
       <div class="section-title" id="weather" style="margin-top:26px;">
-        <h2>Pogoda</h2><span>Prognozy pogody dla Beskidów</span>
+        <h2>Pogoda</h2><span>Radar opadów i prognoza pogody dla Beskidów</span>
       </div>
       <div class="grid">
         <article class="card cam-item" data-cat="weather" data-name="Windy">
@@ -1369,7 +1616,8 @@
     <script>
       const q = document.getElementById('q');
       const items = [...document.querySelectorAll('.cam-item')];
-      const chips = [...document.querySelectorAll('.chip')];
+      const chips = [...document.querySelectorAll('.chip[data-filter]')];
+      const regionChips = [...document.querySelectorAll('.chip[data-region]')];
       const lazyFrames = [...document.querySelectorAll('iframe.lazy-iframe')];
       // Zmiana src istniejącej ramki dopisuje wpis do historii przeglądarki (Wstecz cofałby wewnątrz ramki).
       // Dlatego ramkę podmieniamy na świeżą kopię z nowym adresem – nowy element nie zostawia śladu w historii.
@@ -1393,6 +1641,7 @@
       }
       const emptyState = document.getElementById('empty');
       let activeFilter = 'all';
+      let activeRegion = 'all';
 
       const camModal = document.getElementById('cam-modal');
       const camModalBackdrop = camModal?.querySelector('.cam-modal-backdrop');
@@ -1729,6 +1978,14 @@
       const normalize = str => (str || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ł/g, 'l');
       const EMPTY_FAV_TEXT = 'Brak ulubionych. Kliknij gwiazdkę na kamerze, aby dodać ją do ulubionych.';
 
+      // Nazwy miejsc do wyszukiwania (z etykiet filtrów + dodatkowe miejscowości)
+      const REGION_EXTRA = { bielsko: 'bielsko wilkowice', wisla: 'wisla ustron istebna', zywiecki: 'beskid zywiecki korbielow zawoja zwardon', maly: 'beskid maly miedzybrodzie rzyki' };
+      const regionNames = {};
+      regionChips.forEach(ch => {
+        const key = ch.dataset.region;
+        if (key !== 'all') regionNames[key] = normalize(ch.textContent + ' ' + (REGION_EXTRA[key] || ''));
+      });
+
       function applyFilters() {
         const rawTerm = (q.value || '').trim();
         const term = normalize(rawTerm);
@@ -1736,18 +1993,29 @@
         items.forEach(el => {
           const name = normalize(el.dataset.name);
           const cat = (el.dataset.cat || '').toLowerCase();
-          const okTerm = !term || name.includes(term);
+          const region = el.dataset.region || '';
+          // Szukanie obejmuje też nazwę miejsca: „szczyrk” znajdzie Solisko, „ustroń” – Czantorię
+          const okTerm = !term || name.includes(term) || (regionNames[region] || '').includes(term);
           const isFav = favorites.has(el.dataset.id);
           const okCat = (activeFilter === 'all') || (cat === activeFilter) || (activeFilter === 'fav' && isFav);
-          const isVisible = (okTerm && okCat);
+          // Kafle bez miejsca (pogoda) dotyczą całych Beskidów, więc filtr miejsca ich nie ukrywa
+          const okRegion = activeRegion === 'all' || !region || region === activeRegion;
+          const isVisible = (okTerm && okCat && okRegion);
           el.style.display = isVisible ? '' : 'none';
           if (isVisible) visibleCount++;
         });
         if (emptyState) {
           const showEmpty = visibleCount === 0;
-          emptyState.textContent = term
-            ? `Brak wyników dla „${rawTerm}”${activeFilter !== 'all' ? ' w tej kategorii' : ''}. Spróbuj innej nazwy${activeFilter !== 'all' ? ' lub wybierz „Wszystkie”' : ''}.`
-            : EMPTY_FAV_TEXT;
+          const narrowed = activeFilter !== 'all' || activeRegion !== 'all';
+          if (term) {
+            emptyState.textContent = `Brak wyników dla „${rawTerm}”${narrowed ? ' przy wybranych filtrach' : ''}. Spróbuj innej nazwy${narrowed ? ' lub wybierz „Wszystkie” i „Całe Beskidy”' : ''}.`;
+          } else if (activeFilter === 'fav' && activeRegion === 'all') {
+            emptyState.textContent = EMPTY_FAV_TEXT;
+          } else if (activeFilter === 'fav') {
+            emptyState.textContent = 'Brak ulubionych kamer w tym miejscu. Wybierz „Całe Beskidy” lub dodaj kamerę gwiazdką.';
+          } else {
+            emptyState.textContent = 'Brak kamer z tej kategorii w wybranym miejscu. Wybierz inne miejsce lub „Wszystkie”.';
+          }
           emptyState.style.display = showEmpty ? 'block' : 'none';
         }
         // Ukryj nagłówek i siatkę sekcji, w której nie został żaden widoczny kafel
@@ -1774,6 +2042,18 @@
             x.setAttribute('aria-pressed', x === ch ? 'true' : 'false');
           });
           activeFilter = ch.dataset.filter;
+          applyFilters();
+        });
+      });
+      regionChips.forEach(ch => {
+        ch.addEventListener('click', () => {
+          regionChips.forEach(x => {
+            x.classList.toggle('active', x === ch);
+            x.setAttribute('aria-pressed', x === ch ? 'true' : 'false');
+          });
+          activeRegion = ch.dataset.region;
+          // Na telefonie wiersz przewija się w bok – dosuń wybrane miejsce, żeby było widać je w całości
+          ch.scrollIntoView({ block: 'nearest', inline: 'nearest' });
           applyFilters();
         });
       });

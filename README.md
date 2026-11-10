@@ -10,8 +10,7 @@ Projekt powstał na prywatny użytek:
 ---
 
 ## 🚀 Demo ;)
-👉 **GitHub Pages**
-_(adres repo / pages)_
+👉 **[maxbmx.github.io/awesome-beskid-camera](https://maxbmx.github.io/awesome-beskid-camera/)**
 
 ---
 
