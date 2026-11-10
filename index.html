@@ -607,6 +607,68 @@
         stroke: #fbbf24;
       }
 
+      /* Panel prognozy: kompaktowa tabela 3 dni (Open-Meteo) */
+      .wx {
+        margin-top: 26px;
+        padding: 14px 16px;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        background: var(--card);
+        box-shadow: var(--shadow);
+        color: var(--text);
+        font-size: 13px;
+      }
+      .wx[hidden] { display: none; }
+      .wx-title { margin: 0 0 6px; font-weight: 700; font-size: 14px; }
+      /* Źródło danych: dyskretnie, pod tabelą */
+      .wx-src {
+        margin: 8px 0 0;
+        color: var(--muted);
+        font-size: 10px;
+        opacity: .55;
+        text-align: right;
+      }
+      .wx-src a { color: inherit; text-decoration: none; }
+      .wx-src a:hover { text-decoration: underline; }
+      .wx-table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+        font-variant-numeric: tabular-nums;
+      }
+      .wx-table th,
+      .wx-table td {
+        padding: 6px 4px;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .wx-table thead th {
+        color: var(--muted);
+        font-weight: 600;
+        font-size: 12px;
+      }
+      .wx-table tbody th {
+        text-align: left;
+        color: var(--muted);
+        font-weight: 500;
+        font-size: 12px;
+        padding-left: 0;
+      }
+      .wx-table .wx-col-label { width: 22%; }
+      .wx-table tbody tr + tr > * { border-top: 1px solid var(--border); }
+      .wx-max { font-weight: 700; }
+      .wx-min, .wx-prob { color: var(--muted); }
+      /* Na telefonie prawdopodobieństwo opadów w drugiej, mniejszej linii (inaczej się ucina) */
+      @media (max-width: 768px) {
+        .wx-prob { display: block; font-size: 11px; line-height: 1.1; }
+      }
+      @media (min-width: 769px) {
+        .wx { font-size: 14px; }
+        .wx-table .wx-col-label { width: 14%; }
+      }
+
       .empty-state {
         display: none;
         margin-top: 14px;
@@ -1241,6 +1303,14 @@
           </div>
         </article>
       </div>
+      <section class="wx" id="wx" aria-labelledby="wx-title" hidden>
+        <h2 class="wx-title" id="wx-title">Bielsko-Biała – prognoza</h2>
+        <table class="wx-table">
+          <thead></thead>
+          <tbody></tbody>
+        </table>
+        <p class="wx-src">dane: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a></p>
+      </section>
     </main>
     <footer>
       <div class="footer-inner">
@@ -1697,6 +1767,81 @@
       });
       syncFavButtons();
       applyFilters();
+
+      // Panel prognozy (Open-Meteo, bez klucza). Wynik trzymamy w localStorage na godzinę,
+      // a gdy sieci brak – pokazujemy ostatnie dane, o ile dotyczą dzisiejszego lub późniejszych dni.
+      (() => {
+        const wx = document.getElementById('wx');
+        if (!wx || !window.fetch) return;
+        const WX_KEY = 'abc:wx:v1';
+        const WX_TTL = 60 * 60 * 1000;
+        const WX_URL = 'https://api.open-meteo.com/v1/forecast?latitude=49.82&longitude=19.04'
+          + '&daily=sunrise,sunset,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max'
+          + '&timezone=Europe%2FWarsaw&forecast_days=4';
+        const pad = n => String(n).padStart(2, '0');
+        const todayStr = () => { const d = new Date(); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; };
+        const readCache = () => { try { return JSON.parse(localStorage.getItem(WX_KEY) || 'null'); } catch (_) { return null; } };
+        const writeCache = data => { try { localStorage.setItem(WX_KEY, JSON.stringify({ t: Date.now(), data })); } catch (_) {} };
+        const num = v => (typeof v === 'number' && isFinite(v) ? v : null);
+        const fmtTemp = v => (num(v) == null ? '–' : `${Math.round(v)}°`);
+        const fmtMm = v => (num(v) == null ? '–' : `${(Math.round(v * 10) / 10).toLocaleString('pl-PL')} mm`);
+        const fmtTime = iso => (typeof iso === 'string' && iso.length >= 16 ? iso.slice(11, 16) : '–');
+        const dayLabel = (iso, n) => {
+          if (n === 0) return 'Dziś';
+          if (n === 1) return 'Jutro';
+          const wd = new Date(iso + 'T12:00:00').toLocaleDateString('pl-PL', { weekday: 'short' }).replace('.', '');
+          return wd.charAt(0).toUpperCase() + wd.slice(1);
+        };
+
+        function render(data) {
+          const d = data && data.daily;
+          if (!d || !Array.isArray(d.time) || !d.time.length) return false;
+          const start = d.time.findIndex(t => t >= todayStr());
+          if (start === -1) return false;
+          const idx = [start, start + 1, start + 2].filter(i => i < d.time.length);
+          const col = (arr, i) => (Array.isArray(arr) ? arr[i] : null);
+          const head = '<tr><td class="wx-col-label"></td>'
+            + idx.map((i, n) => `<th scope="col">${dayLabel(d.time[i], n)}</th>`).join('') + '</tr>';
+          const row = (label, cell) => `<tr><th scope="row">${label}</th>${idx.map(i => `<td>${cell(i)}</td>`).join('')}</tr>`;
+          wx.querySelector('thead').innerHTML = head;
+          wx.querySelector('tbody').innerHTML = [
+            row('Temp.', i => `<span class="wx-max">${fmtTemp(col(d.temperature_2m_max, i))}</span> <span class="wx-min">/ ${fmtTemp(col(d.temperature_2m_min, i))}</span>`),
+            row('Opady', i => {
+              const p = num(col(d.precipitation_probability_max, i));
+              return fmtMm(col(d.precipitation_sum, i)) + (p != null ? ` <span class="wx-prob">${Math.round(p)}%</span>` : '');
+            }),
+            row('Wschód', i => fmtTime(col(d.sunrise, i))),
+            row('Zachód', i => fmtTime(col(d.sunset, i)))
+          ].join('');
+          wx.hidden = false;
+          return true;
+        }
+
+        let loading = false;
+        async function loadWeather() {
+          if (loading) return;
+          const cached = readCache();
+          const shown = !!(cached && render(cached.data));
+          if (shown && Date.now() - cached.t < WX_TTL) return;
+          loading = true;
+          try {
+            const res = await fetch(WX_URL, { cache: 'no-store' });
+            if (!res.ok) throw new Error(String(res.status));
+            const data = await res.json();
+            if (render(data)) writeCache(data);
+          } catch (_) {
+            if (!shown) wx.hidden = true;
+          } finally {
+            loading = false;
+          }
+        }
+
+        loadWeather();
+        // PWA otwarta długo w tle: po powrocie odśwież, jeśli dane są starsze niż godzina
+        document.addEventListener('visibilitychange', () => {
+          if (document.visibilityState === 'visible') loadWeather();
+        });
+      })();
 
       // Share functionality
       const shareData = {
