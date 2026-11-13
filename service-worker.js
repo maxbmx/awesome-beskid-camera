@@ -1,12 +1,9 @@
-// Strategia:
-// - dokument (HTML): najpierw sieć, offline – kopia z pamięci podręcznej,
-// - pozostałe pliki z tej domeny (CSS, ikony, manifest): stale-while-revalidate –
-//   od razu kopia z pamięci, a w tle pobranie nowszej wersji na następną wizytę.
+// Strategia: wszystkie pliki z tej domeny najpierw z sieci, offline – kopia z pamięci podręcznej.
+// Dzięki temu HTML, CSS i JS zawsze pochodzą z tego samego wydania.
 // Nowa wersja workera przejmuje stronę od razu (skipWaiting + clients.claim).
-const CACHE_NAME = 'v7';
+const CACHE_NAME = 'v8';
 const CACHE_ASSETS = [
   './',
-  './index.html',
   './manifest.json',
   './awesome-beskid-camera.svg',
   './logo.svg',
@@ -15,7 +12,8 @@ const CACHE_ASSETS = [
   './icon-192.png',
   './icon-512.png',
   './icon-maskable-512.png',
-  './styles.css'
+  './app.css',
+  './app.js'
 ];
 
 self.addEventListener('install', event => {
@@ -43,37 +41,16 @@ const putInCache = async (req, res) => {
 
 self.addEventListener('fetch', event => {
   const req = event.request;
-  if (req.method !== 'GET') return;
-
-  const url = new URL(req.url);
-  if (url.origin !== self.location.origin) return;
-
-  const isDocument = req.mode === 'navigate' || req.destination === 'document';
-  if (isDocument) {
-    event.respondWith((async () => {
-      try {
-        const fresh = await fetch(req);
-        event.waitUntil(putInCache(req, fresh.clone()));
-        return fresh;
-      } catch (_) {
-        const cached = await caches.match(req, { ignoreSearch: true });
-        return cached || (await caches.match('./index.html')) || (await caches.match('./')) || Response.error();
-      }
-    })());
-    return;
-  }
+  if (req.method !== 'GET' || new URL(req.url).origin !== self.location.origin) return;
 
   event.respondWith((async () => {
-    const cached = await caches.match(req);
-    // no-cache: zapytaj serwer (warunkowo, 304 gdy bez zmian), a nie pamięć HTTP przeglądarki
-    const update = fetch(new Request(req, { cache: 'no-cache' })).then(async fresh => {
-      await putInCache(req, fresh.clone());
+    try {
+      const fresh = await fetch(req);
+      event.waitUntil(putInCache(req, fresh.clone()));
       return fresh;
-    });
-    if (cached) {
-      event.waitUntil(update.catch(() => {}));
-      return cached;
+    } catch (_) {
+      const cached = await caches.match(req, { ignoreSearch: true });
+      return cached || (req.mode === 'navigate' && (await caches.match('./'))) || Response.error();
     }
-    return update;
   })());
 });

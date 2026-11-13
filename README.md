@@ -14,6 +14,20 @@ Projekt powstał na prywatny użytek:
 
 ---
 
+## 🛠️ Jak to działa
+
+Strona statyczna bez budowania: `index.html`, `app.css`, `app.js`, `service-worker.js`.
+
+**Dodanie kamery:** jedna linia w tablicy `CAMERAS` na górze `app.js`
+(`cat`: `bike` / `snow` / `weather`, `region`: jak w filtrach miejsca albo `''`).
+Kafel i lista dla wyszukiwarek powstają z niej same.
+
+**Podgląd lokalnie:** `python3 -m http.server 8765`
+
+**Lint (wymaga Node.js):** `npx @biomejs/biome check app.js app.css service-worker.js manifest.json`
+
+---
+
 ## 💬 Dyskusje i pomysły
 👉 **Otwórz Issue**
 👉 **Zaproponuj zmianę w PR (Pull Request)**
